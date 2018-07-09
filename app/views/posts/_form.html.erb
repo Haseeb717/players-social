@@ -1,0 +1,84 @@
+
+
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-3 col-md-3">
+        <% if current_user.present? %>
+         <div class="panel panel-primary">
+            <div class="panel-heading">
+               <h3 class="panel-title">My Roster</h3>
+            </div>
+            <div class="panel-body">
+               <ul class="nav ">
+                  <% current_user.follows_by_type('Player').each do |roaster| %>
+                    <% player = Player.find(roaster.followable_id) %>
+                    <li><a href="#"><%= player.name %></a></li>
+                  <% end %>
+               </ul>
+            </div>
+         </div>
+        <% end %>
+         <!-- panel -->
+      </div>
+      <!--/span-->
+      <div class="col-sm-6 col-md-6">
+        <%= render "/layouts/alerts" %>
+         <div class="jumbotron custum-jumbotron">
+            <h1 class="center">Create Post</h1>
+            <hr />
+            <%= form_with(model: post, local: true) do |f| %>
+              <fieldset>
+                <div class="form-group">
+                  <%= f.text_field :title, autofocus: true,:placeholder=>"Title",:class=>"form-control" %>
+                </div>
+                <div class="form-group">
+                  <%= f.text_area :description,:placeholder=>"Description",:class=>"form-control",:minlength=>10,maxlength: 250 %>
+                </div>
+                <div class="form-group">
+                  <%= f.file_field :image %>
+                </div>
+                <%= f.hidden_field :user_id,:value=>current_user.id %>
+                <%= f.submit "Create",:class=>"btn btn-primary btn-sign-in" %>
+              </fieldset>
+            <% end %>
+         </div>
+      </div>
+      <!--/span-->
+      <div class="col-sm-3 col-md-3">
+         <div class="panel panel-primary">
+            <div class="panel-heading">
+               <h3 class="panel-title">Who  to follow</h3>
+            </div>
+            <div class="panel-body">
+               <ul class="nav">
+                  <% User.last(5).each do |user| %>
+                    <li class=""><%= link_to user.name,user_path(user.id) %></li>
+                  <% end %>
+               </ul>
+            </div>
+         </div>
+         <!-- panel -->
+         <div class="panel panel-primary">
+            <div class="panel-body">
+               <ul class="nav ">
+                  <li><a href="#">&copy; 2018 Nampit</a>
+                  </li>
+                  <li><a href="#">About</a>
+                  </li>
+                  <li><a href="#">Help</a>
+                  </li>
+                  <li><a href="#">Terms</a>
+                  </li>
+                  <li><a href="#">Privacy Policy</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <!-- panel -->
+         <!--/sidebar-nav-fixed -->
+      </div>
+      <!--/span-->
+   </div>
+   <!--/row-->
+</div>
+

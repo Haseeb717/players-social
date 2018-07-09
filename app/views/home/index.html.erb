@@ -1,0 +1,105 @@
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-3 col-md-3">
+        <% if current_user.present? %>
+         <div class="panel panel-primary">
+            <div class="panel-heading">
+               <h3 class="panel-title">My Roster</h3>
+            </div>
+            <div class="panel-body">
+               <ul class="nav ">
+                  <% current_user.follows_by_type('Player').each do |roaster| %>
+                    <% player = Player.find(roaster.followable_id) %>
+                    <li><a href="#"><%= player.name %></a></li>
+                  <% end %>
+               </ul>
+            </div>
+         </div>
+        <% end %>
+         <!-- panel -->
+      </div>
+      <!--/span-->
+      <div class="col-sm-6 col-md-6">
+      	<%= render "/layouts/alerts" %>
+         <div class="jumbotron custum-jumbotron">
+            <% if current_user.present? %>
+              <h1>Hello, <%= "#{current_user.name}" %></h1>
+            <% end %>
+            <hr />
+            <% Post.all.each do |post| %>
+              <div class="media">
+                 <a class="pull-left" href="#">
+                  <% if post.image.present? %>
+                    <%= image_tag post.image.url(:profile),class: "media-object" %>
+                  <% else %>
+                    <%= image_tag "post.png",class: "media-object" %>
+                  <% end %>
+                 </a>
+                 <div class="media-body">
+                    <h4 class="media-heading"><%= post.title %><span class="pull-right">By <%= post.user.name %></span></h4>
+                    <p><%= post.description %> <%= link_to "Read More",post_path(post),:class=>"btn btn-info btn-xs" %>
+                    </p>
+                    <ul class="list-inline list-unstyled">
+                       <li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at.to_date.strftime('%a %b %d') %> </span></li>
+                       <li>|</li>
+                       <span><i class="glyphicon glyphicon-comment"></i> <%= post.comments.count %> Comments</span>
+                       <li>|</li>
+                       <li>
+                          <span class="glyphicon glyphicon-star"></span>
+                          <span class="glyphicon glyphicon-star"></span>
+                          <span class="glyphicon glyphicon-star"></span>
+                          <span class="glyphicon glyphicon-star"></span>
+                          <span class="glyphicon glyphicon-star-empty"></span>
+                       </li>
+                       <li>|</li>
+                       <li>
+
+                          <span><i class="fa fa-facebook-square"></i></span>
+                          <span><i class="fa fa-twitter-square"></i></span>
+                          <span><i class="fa fa-google-plus-square"></i></span>
+                       </li>
+                    </ul>
+                 </div>
+              </div>
+              <hr />
+            <% end %>
+         </div>
+      </div>
+      <!--/span-->
+      <div class="col-sm-3 col-md-3">
+         <div class="panel panel-primary">
+            <div class="panel-heading">
+               <h3 class="panel-title">Who  to follow</h3>
+            </div>
+            <div class="panel-body">
+               <ul class="nav">
+                  <% User.last(5).each do |user| %>
+                    <li class=""><%= link_to user.name,user_path(user.id) %></li>
+                  <% end %>
+               </ul>
+            </div>
+         </div>
+         <!-- panel -->
+         <div class="panel panel-primary">
+            <div class="panel-body">
+               <ul class="nav ">
+                  <li><a href="#">&copy; 2018 Nampit</a>
+                  </li>
+                  <li><a href="#">About</a>
+                  </li>
+                  <li><a href="#">Help</a>
+                  </li>
+                  <li><a href="#">Terms</a>
+                  </li>
+                  <li><a href="#">Privacy Policy</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <!-- panel -->
+         <!--/sidebar-nav-fixed -->
+      </div>
+      <!--/span-->
+   </div>
+   <!--/row-->
+</div>

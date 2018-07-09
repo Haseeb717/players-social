@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Social</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  	<div class="navbar navbar-fixed-top navbar-default mynav">
+         <div class="container">
+            <div class="navbar-header"><%= link_to "NAMPIT",root_path,:class=>"navbar-brand" %><a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+               <span class="glyphicon glyphicon-bar"></span>
+               <span class="glyphicon glyphicon-bar"></span>
+               <span class="glyphicon glyphicon-bar"></span>
+               </a>
+            </div>
+            <div class="navbar-collapse">
+               <ul class="nav navbar-nav">
+                  <li class="font_18"><%= link_to "Players",players_path %></li>
+                  <li class="font_18"><%= link_to "Users",users_path %></li>
+                  <li class="font_18"><%= link_to "Create Post",new_post_path %></li>
+               </ul>
+               <ul class="nav navbar-nav navbar-right links">
+               		<% if user_signed_in? %>
+               			<%= link_to "Edit Profile", edit_user_registration_path,:class=>"btn btn-sm btn-info"%>
+                  	<%= link_to "Logout", destroy_user_session_path, method: :delete,:class=>"btn btn-sm btn-danger"%>
+                  <% else %>
+                  	<%= link_to "Log in", new_user_session_path,:class=>"btn btn-sm btn-info" %>
+                  	<%= link_to "Sign up", new_user_registration_path,:class=>"btn btn-sm btn-info" %>
+                  <% end %>
+               </ul>
+               <form class="navbar-form navbar-right">
+                  <div class="form-group">
+                     <input type="text" class="form-control" placeholder="Search Nampit">
+                  </div>
+               </form>
+            </div>
+            <!--/.navbar-collapse -->
+         </div>
+    </div>
+    <section id="breaking-news">
+       <div class="container">
+          <div class="sitewidth">
+             <div class="br-title">Trending Now:</div>
+             <marquee>
+                <ul>
+                   <li><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                      tempor incididunt</a>
+                   </li>
+                   <li><a href="#"> consectetur adipisicing elit, sed do eiusmod
+                      tempor incididunt Lorem ipsum dolor sit amet,</a>
+                   </li>
+                </ul>
+             </marquee>
+          </div>
+       </div>
+    </section>
+    <%= yield %>
+  </body>
+</html>

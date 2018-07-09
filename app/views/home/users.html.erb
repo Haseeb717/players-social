@@ -1,0 +1,100 @@
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-3 col-md-3">
+         <div class="panel panel-primary">
+            <div class="panel-heading">
+               <h3 class="panel-title">My Roster</h3>
+            </div>
+            <div class="panel-body">
+               <ul class="nav ">
+                  <li class="active"><a href="#">Tom Brady</a>
+                  </li>
+                  <li><a href="#">Rob Grandowshi</a>
+                  </li>
+                  <li><a href="#">David Johnson</a>
+                  </li>
+                  <li><a href="#">John Doe</a>
+                  </li>
+                  <li><a href="#">Steve James</a>
+                  </li>
+                  <li><a href="#">Mike Nim</a>
+                  </li>
+                  <li><a href="#">John Doe</a>
+                  </li>
+                  <li><a href="#">Steve James</a>
+                  </li>
+                  <li><a href="#">Mike Nim</a>
+                  </li>
+                  <li><a href="#">John Doe</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <!-- panel -->
+      </div>
+      <!--/span-->
+      <div class="col-sm-6 col-md-6">
+        <%= render "/layouts/alerts" %>
+         <div class="jumbotron custum-jumbotron">
+            <h1 class="center">Users</h1>
+            <hr />
+            <% @users.each do |player| %>
+              <div class="media">
+                 <a class="pull-left" href="#">
+                  <% if player.image.present? %>
+                    <%= image_tag player.image.url(:profile),class: "media-object" %>
+                  <% else %>
+                    <%= image_tag "index.jpg",class: "media-object" %>
+                  <% end %>
+                 </a>
+                 <div class="media-body">
+                    <h4 class="media-heading"><%= link_to player.name,user_path(player.id) %>
+                    <span class="pull-right"><%= link_to "Follow",add_follow_path(player.id) %></span></h4>
+                 </div>
+              </div>
+              <hr />
+            <% end %>
+         </div>
+      </div>
+      <!--/span-->
+      <div class="col-sm-3 col-md-3">
+         <div class="panel panel-primary">
+            <div class="panel-heading">
+               <h3 class="panel-title">Who  to follow</h3>
+            </div>
+            <div class="panel-body">
+               <ul class="nav ">
+                  <li class="active"><a href="#">Tom Brady</a>
+                  </li>
+                  <li><a href="#">Rob Grandowshi</a>
+                  </li>
+                  <li><a href="#">David Johnson</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <!-- panel -->
+         <div class="panel panel-primary">
+            <div class="panel-body">
+               <ul class="nav ">
+                  <li><a href="#">&copy; 2018 Nampit</a>
+                  </li>
+                  <li><a href="#">About</a>
+                  </li>
+                  <li><a href="#">Help</a>
+                  </li>
+                  <li><a href="#">Terms</a>
+                  </li>
+                  <li><a href="#">Privacy Policy</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <!-- panel -->
+         <!--/sidebar-nav-fixed -->
+      </div>
+      <!--/span-->
+   </div>
+   <!--/row-->
+</div>
+
