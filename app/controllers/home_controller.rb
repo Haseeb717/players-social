@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  before_action :authenticate_user!, :only => [:add_roaster,:add_follow]
+  
   def index
   end
 

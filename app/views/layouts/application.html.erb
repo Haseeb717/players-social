@@ -21,7 +21,9 @@
                <ul class="nav navbar-nav">
                   <li class="font_18"><%= link_to "Players",players_path %></li>
                   <li class="font_18"><%= link_to "Users",users_path %></li>
-                  <li class="font_18"><%= link_to "Create Post",new_post_path %></li>
+                  <% if user_signed_in? %>
+                    <li class="font_18"><%= link_to "Create Post",new_post_path %></li>
+                  <% end %>
                </ul>
                <ul class="nav navbar-nav navbar-right links">
                		<% if user_signed_in? %>
@@ -48,9 +50,7 @@
              <marquee>
                 <ul>
                   <% NewsLetter.all.each do |news| %>
-                   <li><%= news.description %>
-                   </li>
-                   
+                   <li><%= news.description %></li>
                   <% end %>
                 </ul>
              </marquee>
