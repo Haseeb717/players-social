@@ -47,12 +47,11 @@
              <div class="br-title">Trending Now:</div>
              <marquee>
                 <ul>
-                   <li><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt</a>
+                  <% NewsLetter.all.each do |news| %>
+                   <li><%= news.description %>
                    </li>
-                   <li><a href="#"> consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt Lorem ipsum dolor sit amet,</a>
-                   </li>
+                   
+                  <% end %>
                 </ul>
              </marquee>
           </div>
