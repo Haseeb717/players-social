@@ -36,7 +36,7 @@
                   <% end %>
                  </a>
                  <div class="media-body">
-                    <h4 class="media-heading"><%= post.title %><span class="pull-right">By <%= post.user.name %></span></h4>
+                    <h4 class="media-heading"><%= link_to post.title,post_path(post) %><span class="pull-right">By <%= link_to post.user.name ,user_path(post.user) %></span></h4>
                     <p><%= post.description %> <%= link_to "Read More",post_path(post),:class=>"btn btn-info btn-xs" %>
                     </p>
                     <ul class="list-inline list-unstyled">

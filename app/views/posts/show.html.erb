@@ -1,101 +1,134 @@
 <div class="container-fluid">
-         <div class="row">
-            <div class="col-sm-3 col-md-3">
-               <div class="panel panel-primary">
-                  <div class="panel-heading">
-                     <h3 class="panel-title">My Roster</h3>
-                  </div>
-                  <div class="panel-body">
-                     <ul class="nav ">
-                        <li class="active"><a href="#">Tom Brady</a>
-                        </li>
-                        <li><a href="#">Rob Grandowshi</a>
-                        </li>
-                        <li><a href="#">David Johnson</a>
-                        </li>
-                        <li><a href="#">John Doe</a>
-                        </li>
-                        <li><a href="#">Steve James</a>
-                        </li>
-                        <li><a href="#">Mike Nim</a>
-                        </li>
-                        <li><a href="#">John Doe</a>
-                        </li>
-                        <li><a href="#">Steve James</a>
-                        </li>
-                        <li><a href="#">Mike Nim</a>
-                        </li>
-                        <li><a href="#">John Doe</a>
-                        </li>
-                     </ul>
-                  </div>
-               </div>
-               <!-- panel -->
+   <div class="row">
+      <div class="col-sm-3 col-md-3">
+        <% if current_user.present? %>
+         <div class="panel panel-primary">
+            <div class="panel-heading">
+               <h3 class="panel-title">My Roster</h3>
             </div>
-            <!--/span-->
-            <div class="col-sm-9 col-md-8">
-               <div class="jumbotron custum-jumbotron">
-                  <br />
-                  <div class="media">
-                     <a class="media-left" href="#">
-                     <img src="images/james.png" />
-                     </a>
-                     <div class="media-body pt15">
-                        <h3 class="media-heading">John Doe</h3>
-                        <p><a href="" class="btn btn-success">Follow</a>&nbsp; <a href="" class="btn btn-primary">Message</a></p>
-                     </div>
-                  </div>
-                  <br />
-                  <div class="panel panel-info">
-                     <div class="panel-heading">
-                        <h3 class="panel-title">About</h3>
-                     </div>
-                     <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                           tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                           quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        </p>
-                     </div>
-                  </div>
-                  <div class="comments">
-                     <div class="comment-wrap">
-                        <div class="photo">
-                           <div class="avatar" style="background-image: url('images/128.jpg')"></div>
-                        </div>
-                        <div class="comment-block">
-                           <h4>John Doe<span class="pull-right"><small>Aug 24, 2014 @ 2:35 </small></span></h4>
-                           <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat explicabo veniam fuga corporis totam reprehenderit quasi
-                              sapiente modi tempora at perspiciatis mollitia, dolores voluptate. Cumque, corrupti?
-                           </p>
-                           <div class="bottom-comment">
-                              <ul class="comment-actions">
-                                 <li class="complain">Like</li>
-                                 <li class="reply">Report</li>
-                                 <li class="reply">Comment</li>
-                              </ul>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="comment-wrap">
-                        <div class="photo">
-                           <div class="avatar" style="background-image: url('images/129.jpg')"></div>
-                        </div>
-                        <div class="comment-block">
-                           <h4>John Doe<span class="pull-right"><small>Aug 24, 2014 @ 2:35 </small></span></h4>
-                           <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat explicabo veniam fuga corporis totam.</p>
-                           <div class="bottom-comment">
-                              <ul class="comment-actions">
-                                 <li class="complain">Like</li>
-                                 <li class="reply">Report</li>
-                                 <li class="reply">Comment</li>
-                              </ul>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+            <div class="panel-body">
+               <ul class="nav ">
+                  <% current_user.follows_by_type('Player').each do |roaster| %>
+                    <% player = Player.find(roaster.followable_id) %>
+                    <li><a href="#"><%= player.name %></a></li>
+                  <% end %>
+               </ul>
             </div>
-            <!--/span-->
          </div>
-         <!--/row-->
+        <% end %>
+         <!-- panel -->
       </div>
+      <!--/span-->
+      <div class="col-sm-6 col-md-6">
+         <div class="jumbotron custum-jumbotron">
+            <br />
+            <div class="media">
+               <a class="media-left" href="#">
+                  <% if @post.user.image.present? %>
+                    <%= image_tag @post.user.image.url(:profile),class: "media-object" %>
+                  <% else %>
+                    <%= image_tag "index.jpg",class: "media-object" %>
+                  <% end %>
+               </a>
+               <div class="media-body pt15">
+                  <h3 class="media-heading"><%= link_to @post.user.name,user_path(@post.user) %>
+                    <% if @post.player.present? %>
+                      <i class="fa fa-caret-right"></i> <%= link_to @post.player.name,player_path(@post.player) %>
+                    <% end %>
+                  </h3>
+                  <p><%= link_to "Follow",add_follow_path(@post.user.id),:class=>"btn btn-success" %>&nbsp; <a href="" class="btn btn-primary">Message</a></p>
+               </div>
+            </div>
+            <br />
+            <div class="panel panel-info">
+               <div class="panel-heading">
+                  <h3 class="panel-title"><%= @post.title %></h3>
+               </div>
+               <div class="panel-body">
+                  <p><%= @post.description %>
+                  </p>
+               </div>
+            </div>
+
+            <div class="jumbotron custum-jumbotron">
+              <h1 class="center">Create Comment</h1>
+              <% comment = Comment.new %>
+              <%= form_with(model: comment, local: true) do |f| %>
+                <fieldset style="text-align: center;">
+                  <div class="form-group">
+                    <%= f.text_area :description,:placeholder=>"Description",:class=>"form-control",:minlength=>10,maxlength: 250 %>
+                  </div>
+                  <%= f.hidden_field :user_id,:value=>current_user.id %>
+                  <%= f.hidden_field :post_id,:value=>@post.id %>
+                  <%= f.submit "Create",:class=>"btn btn-primary btn-sign-in" %>
+                </fieldset>
+              <% end %>
+           </div>
+           <hr>
+          <% @post.comments.each do |comment| %>
+            <div class="comments">
+              <div class="comment-wrap">
+                <div class="photo">
+                  <% if @post.user.image.present? %>
+                    <div class="avatar" style="background-image: url('<%= @post.user.image.url(:profile) %>')"></div>
+                  <% else %>
+                    <div class="avatar" style="background-image: url('index.jpg')"></div>
+                  <% end %>
+                </div>
+
+                <div class="comment-block">
+                   <h4><%= comment.user.name %><span class="pull-right"><small><%= comment.created_at.to_date.strftime('%a, %b %d') %></small></span></h4>
+                   <p class="comment-text"><%= comment.description %>
+                   </p>
+                   <div class="bottom-comment">
+                      <ul class="comment-actions">
+                         <li class="complain">Like</li>
+                         <li class="reply">Report</li>
+                         <li class="reply">Comment</li>
+                      </ul>
+                   </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+         </div>
+      </div>
+      <!--/span-->
+
+      <div class="col-sm-3 col-md-3">
+         <div class="panel panel-primary">
+            <div class="panel-heading">
+               <h3 class="panel-title">Who to follow</h3>
+            </div>
+            <div class="panel-body">
+               <ul class="nav">
+                  <% User.last(5).each do |user| %>
+                    <li class=""><%= link_to user.name,user_path(user.id) %></li>
+                  <% end %>
+               </ul>
+            </div>
+         </div>
+         <!-- panel -->
+         <div class="panel panel-primary">
+            <div class="panel-body">
+               <ul class="nav ">
+                  <li><a href="#">&copy; 2018 Nampit</a>
+                  </li>
+                  <li><a href="#">About</a>
+                  </li>
+                  <li><a href="#">Help</a>
+                  </li>
+                  <li><a href="#">Terms</a>
+                  </li>
+                  <li><a href="#">Privacy Policy</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <!-- panel -->
+         <!--/sidebar-nav-fixed -->
+      </div>
+      <!--/span-->
+   </div>
+   <!--/row-->
+</div>

@@ -1,35 +1,21 @@
 <div class="container-fluid">
    <div class="row">
       <div class="col-sm-3 col-md-3">
+        <% if current_user.present? %>
          <div class="panel panel-primary">
             <div class="panel-heading">
                <h3 class="panel-title">My Roster</h3>
             </div>
             <div class="panel-body">
                <ul class="nav ">
-                  <li class="active"><a href="#">Tom Brady</a>
-                  </li>
-                  <li><a href="#">Rob Grandowshi</a>
-                  </li>
-                  <li><a href="#">David Johnson</a>
-                  </li>
-                  <li><a href="#">John Doe</a>
-                  </li>
-                  <li><a href="#">Steve James</a>
-                  </li>
-                  <li><a href="#">Mike Nim</a>
-                  </li>
-                  <li><a href="#">John Doe</a>
-                  </li>
-                  <li><a href="#">Steve James</a>
-                  </li>
-                  <li><a href="#">Mike Nim</a>
-                  </li>
-                  <li><a href="#">John Doe</a>
-                  </li>
+                  <% current_user.follows_by_type('Player').each do |roaster| %>
+                    <% player = Player.find(roaster.followable_id) %>
+                    <li><a href="#"><%= player.name %></a></li>
+                  <% end %>
                </ul>
             </div>
          </div>
+        <% end %>
          <!-- panel -->
       </div>
       <!--/span-->
@@ -63,13 +49,10 @@
                <h3 class="panel-title">Who  to follow</h3>
             </div>
             <div class="panel-body">
-               <ul class="nav ">
-                  <li class="active"><a href="#">Tom Brady</a>
-                  </li>
-                  <li><a href="#">Rob Grandowshi</a>
-                  </li>
-                  <li><a href="#">David Johnson</a>
-                  </li>
+               <ul class="nav">
+                  <% User.last(5).each do |user| %>
+                    <li class=""><%= link_to user.name,user_path(user.id) %></li>
+                  <% end %>
                </ul>
             </div>
          </div>
