@@ -15,7 +15,13 @@
            </a>
            <div class="media-body">
               <h4 class="media-heading"><%= link_to @player.name,player_path(@player) %>
-              <span class="pull-right"><%= link_to "Add to Roster",add_roaster_path(@player.id),:class=>"btn btn-success" %></span></h4>
+              <% if current_user.present? %>
+                <% if current_user.following?(@player) %>
+                  <span class="pull-right"><%= link_to "Remove from Roster",remove_roaster_path(@player.id),:class=>"btn btn-success" %></span></h4>
+                <% else %>
+                  <span class="pull-right"><%= link_to "Add to Roster",add_roaster_path(@player.id),:class=>"btn btn-success" %></span></h4>
+                <% end %>
+              <% end %>
               <p><%= @player.about %></p>
            </div>
           </div>
