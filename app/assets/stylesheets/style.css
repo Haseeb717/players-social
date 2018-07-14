@@ -28,8 +28,10 @@ img.media-object {
     height: 140px;
     width: 140px;
 }
+.media-object-small{height: 64px;width: 64px;}
 .post_comment{ cursor: pointer; }
 .comments_section{ display: none; }
+.marquee li{margin-right: 15px;margin-left: 15px;}
 .comments_section .form-group{ margin-top: 15px !important; }
 .comments_section .form-control{width:85%;float: left;}
 .comments_section .comment-block{padding: 0 15px !important;}

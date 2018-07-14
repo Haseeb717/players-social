@@ -6,28 +6,29 @@
       	<%= render "/layouts/alerts" %>
          <div class="jumbotron custum-jumbotron">
             <% if current_user.present? %>
-              <h1>Hello, <%= "#{current_user.name}" %></h1>
+              
+                <% if current_user.image.present? %>
+                  <%= image_tag current_user.image.url(:small),class: "media-object-small" %>
+                <% else %>
+                  <%= image_tag "index.jpeg",class: "media-object-small" %>
+                <% end %>
+
+              <h1 style="display: inline;">Hello, <%= "#{current_user.name}" %></h1>
             <% end %>
             <hr />
 
             <% if current_user.present? %>
-            <h1 class="center">Create Post</h1>
             
             <% post = Post.new %>
             <%= form_with(model: post, local: true) do |f| %>
               <fieldset style="text-align: center;">
                 <div class="form-group">
-                  <%= f.text_field :title, autofocus: true,:placeholder=>"Title",:class=>"form-control" %>
-                </div>
-                <div class="form-group">
                   <%= f.text_area :description,:placeholder=>"Description",:class=>"form-control",:minlength=>10,maxlength: 250 %>
                 </div>
-                <div class="form-group">
-                  <%= f.file_field :image %>
-                </div>
+                
                 <%= f.hidden_field :user_id,:value=>current_user.id %>
                 <%#= f.hidden_field :another_user_id,:value=>@player.id %>
-                <%= f.submit "Create",:class=>"btn btn-primary btn-sign-in" %>
+                <%= f.submit "Post",:class=>"btn btn-primary btn-sign-in" %>
               </fieldset>
             <% end %>
           <% end %>
@@ -35,7 +36,7 @@
           <hr>
           <br />
 
-          <% Post.where('spam !=?',true).all.each do |post| %>
+          <% Post.where('spam !=? and player_id IS ?',true,nil).order('created_at desc').all.each do |post| %>
             <div class="media">
                <a class="pull-left" href="#">
                 <% if post.image.present? %>
@@ -47,9 +48,9 @@
                <div class="media-body">
                   <% if post.another_user_id.present? %>
                     <% another_user = User.find_by_id(post.another_user_id) %>
-                    <h4 class="media-heading"><%= link_to post.title,post_path(post) %> <span class="pull-right"> By <%= link_to post.user.name ,user_path(another_user.id) %> <i class="fa fa-caret-right"></i> <%= link_to post.user.name,user_path(post.user) %> </span></h4>
+                    <h4 class="media-heading"><%#= link_to post.title,post_path(post) %> <span class="pull-right"> By <%= link_to post.user.name ,user_path(another_user.id) %> <i class="fa fa-caret-right"></i> <%= link_to post.user.name,user_path(post.user) %> </span></h4>
                   <% else %>
-                    <h4 class="media-heading"><%= link_to post.title,post_path(post) %><span class="pull-right"> By <%= link_to post.user.name ,user_path(post.user) %></span></h4>
+                    <h4 class="media-heading"><%#= link_to post.title,post_path(post) %><span class="pull-right"> By <%= link_to post.user.name ,user_path(post.user) %></span></h4>
                   <% end %>
 
                   <p><%= post.description %> <%= link_to "Read More",post_path(post),:class=>"btn btn-info btn-xs" %>

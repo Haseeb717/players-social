@@ -26,7 +26,7 @@
                		<% if user_signed_in? %>
                			<%= link_to "Edit Profile", edit_user_registration_path,:class=>"btn btn-sm btn-info"%>
                   	<%= link_to "Logout", destroy_user_session_path, method: :delete,:class=>"btn btn-sm btn-danger"%>
-                    <%= link_to "My Posts",my_posts_path,:class=>"btn btn-sm btn-success" %>
+                    <%#= link_to "My Posts",my_posts_path,:class=>"btn btn-sm btn-success" %>
                   <% else %>
                   	<%= link_to "Log in", new_user_session_path,:class=>"btn btn-sm btn-info" %>
                   	<%= link_to "Sign up", new_user_registration_path,:class=>"btn btn-sm btn-info" %>
@@ -45,10 +45,12 @@
        <div class="container">
           <div class="sitewidth">
              <div class="br-title">Trending Now:</div>
-             <marquee>
+             <marquee class="marquee">
                 <ul>
-                  <% NewsLetter.all.each do |news| %>
-                   <li><%= news.description %></li>
+                  <% Post.where('player_id IS NOT ?',nil).last(10).each do |post| %>
+                    <% user_name = User.find_by_id(post.user_id).name %>
+                    <% player_name = Player.find_by_id(post.player_id).name %>
+                    <li><%= "#{user_name.capitalize} posted on #{player_name.capitalize}"  %></li>
                   <% end %>
                 </ul>
              </marquee>
