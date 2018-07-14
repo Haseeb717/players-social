@@ -1,0 +1,38 @@
+
+  <% comment = Comment.new %>
+  <%= form_with(model: comment, local: true) do |f| %>
+    <fieldset style="text-align: center;">
+      <div class="form-group">
+        <%= f.text_field :description,:placeholder=>"Write a comment",:class=>"form-control",:minlength=>10,maxlength: 250 %>
+        <%= f.hidden_field :user_id,:value=>current_user.id %>
+        <%= f.hidden_field :post_id,:value=>post.id %>
+        <%= f.submit "Create",:class=>"btn btn-primary btn-sign-in",:style=>"float: right;" %>
+      </div>
+    </fieldset>
+  <% end %>
+  <hr>
+  <% post.comments.each do |comment| %>
+    <div class="comments">
+      <div class="comment-wrap">
+        <div class="photo">
+          <% if post.user.image.present? %>
+            <div class="avatar" style="background-image: url('<%= post.user.image.url(:profile) %>')"></div>
+          <% else %>
+            <div class="avatar" style="background-image: url('index.jpg')"></div>
+          <% end %>
+        </div>
+
+        <div class="comment-block">
+           <h4><%= link_to comment.user.name,user_path(comment.user) %><span class="pull-right"><small><%= comment.created_at.to_date.strftime('%a, %b %d') %></small></span></h4>
+           <p class="comment-text"><%= comment.description %>
+           </p>
+           <div class="bottom-comment">
+              <ul class="comment-actions">
+                 <li class="complain">Like</li>
+                 <li class="reply">Report</li>
+              </ul>
+           </div>
+        </div>
+      </div>
+    </div>
+  <% end %>

@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save!
-        format.html { redirect_to post_path(@comment.post), notice: 'Comment was successfully created.' }
+        format.html { redirect_back fallback_location: root_path, notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }

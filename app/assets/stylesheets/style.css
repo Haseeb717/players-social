@@ -28,6 +28,13 @@ img.media-object {
     height: 140px;
     width: 140px;
 }
+.post_comment{ cursor: pointer; }
+.comments_section{ display: none; }
+.comments_section .form-group{ margin-top: 15px !important; }
+.comments_section .form-control{width:85%;float: left;}
+.comments_section .comment-block{padding: 0 15px !important;}
+.comments_section .comment-text{margin-bottom: 0 !important;}
+.comments_section h4{margin-top: 5px;margin-bottom: 4px;}
 .center{text-align: center;}
 .text-center{
     text-align: center;

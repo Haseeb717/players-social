@@ -22,7 +22,7 @@
                   <%= f.file_field :image %>
                 </div>
                 <%= f.hidden_field :user_id,:value=>current_user.id %>
-                <%= f.hidden_field :user_id,:value=>@player.id %>
+                <%= f.hidden_field :player_id,:value=>@player.id %>
                 <%= f.submit "Create",:class=>"btn btn-primary btn-sign-in" %>
               </fieldset>
             <% end %>
@@ -51,12 +51,16 @@
 	             <div class="fb-testimonial-inner">
 	                <div class="fb-profile">
 	                	<% if post.image.present? %>
-	                    <%= image_tag post.image.url(:profile),class: "facebook-thumb" %>
+	                    <%= link_to post_path(post) do %>
+                        <%= image_tag post.image.url(:profile),class: "facebook-thumb" %>
+                      <% end %>
 	                  <% else %>
-	                    <%= image_tag "post.png",class: "facebook-thumb" %>
+                      <%= link_to post_path(post) do %>
+	                      <%= image_tag "post.png",class: "facebook-thumb" %>
+                      <% end %>
 	                  <% end %>
 	        
-	                   <p class="facebook-name"><%= post.player.name %> <i class="fa fa-caret-right"></i> <%= link_to post.user.name,user_path(post.user) %> <br><span class="facebook-date"><a href=""><%= post.created_at.to_date.strftime('%a %b %d') %></a> · <i class="fa fa-globe"></i></span></p>
+	                   <p class="facebook-name"><%= post.player.name %> <i class="fa fa-caret-right"></i> <%= link_to post.user.name,user_path(post.user) %> <br><span class="facebook-date"><%= post.created_at.to_date.strftime('%a %b %d') %>  <i class="fa fa-globe"></i></span></p>
 	                </div>
 	                <div class="fb-testimonial-copy">
 	                   <p><%= post.description %>

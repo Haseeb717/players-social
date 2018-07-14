@@ -44,7 +44,6 @@
                   <%= image_tag "post.png",class: "media-object" %>
                 <% end %>
                </a>
-               <%# byebug %>
                <div class="media-body">
                   <% if post.another_user_id.present? %>
                     <% another_user = User.find_by_id(post.another_user_id) %>
@@ -58,9 +57,12 @@
                   <ul class="list-inline list-unstyled">
                      <li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at.to_date.strftime('%a %b %d') %> </span></li>
                      <li>|</li>
-                     <span><i class="glyphicon glyphicon-comment"></i> <%= post.comments.count %> Comments</span>
+                     <span class="post_comment" id="<%= "#{post.id}" %>"><i class="glyphicon glyphicon-comment"></i> <%= post.comments.count %> Comments</span>
                   </ul>
                </div>
+            </div>
+            <div class="comments_section" id="<%= "comments_#{post.id}" %>">
+              <%= render :partial => "/posts/comments", locals: {post: post} %>
             </div>
             <hr />
           <% end %>

@@ -28,7 +28,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save!
-        format.html { redirect_to root_path, notice: 'Post was successfully created.' }
+        format.html { redirect_back fallback_location: root_path, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new }
@@ -69,6 +69,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:title,:description,:image,:user_id,:another_user_id)
+      params.require(:post).permit(:title,:description,:image,:user_id,:another_user_id,:player_id)
     end
 end
