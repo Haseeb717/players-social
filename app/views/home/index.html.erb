@@ -1,23 +1,6 @@
 <div class="container-fluid">
    <div class="row">
-      <div class="col-sm-3 col-md-3">
-        <% if current_user.present? %>
-         <div class="panel panel-primary">
-            <div class="panel-heading">
-               <h3 class="panel-title">My Roster</h3>
-            </div>
-            <div class="panel-body">
-               <ul class="nav ">
-                  <% current_user.follows_by_type('Player').each do |roaster| %>
-                    <% player = Player.find(roaster.followable_id) %>
-                    <li><a href="#"><%= player.name %></a></li>
-                  <% end %>
-               </ul>
-            </div>
-         </div>
-        <% end %>
-         <!-- panel -->
-      </div>
+      <%= render "/layouts/roaster" %>
       <!--/span-->
       <div class="col-sm-6 col-md-6">
       	<%= render "/layouts/alerts" %>
@@ -26,43 +9,76 @@
               <h1>Hello, <%= "#{current_user.name}" %></h1>
             <% end %>
             <hr />
-            <% Post.all.each do |post| %>
-              <div class="media">
-                 <a class="pull-left" href="#">
-                  <% if post.image.present? %>
-                    <%= image_tag post.image.url(:profile),class: "media-object" %>
-                  <% else %>
-                    <%= image_tag "post.png",class: "media-object" %>
-                  <% end %>
-                 </a>
-                 <div class="media-body">
-                    <h4 class="media-heading"><%= link_to post.title,post_path(post) %><span class="pull-right">By <%= link_to post.user.name ,user_path(post.user) %></span></h4>
-                    <p><%= post.description %> <%= link_to "Read More",post_path(post),:class=>"btn btn-info btn-xs" %>
-                    </p>
-                    <ul class="list-inline list-unstyled">
-                       <li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at.to_date.strftime('%a %b %d') %> </span></li>
-                       <li>|</li>
-                       <span><i class="glyphicon glyphicon-comment"></i> <%= post.comments.count %> Comments</span>
-                       <li>|</li>
-                       <li>
-                          <span class="glyphicon glyphicon-star"></span>
-                          <span class="glyphicon glyphicon-star"></span>
-                          <span class="glyphicon glyphicon-star"></span>
-                          <span class="glyphicon glyphicon-star"></span>
-                          <span class="glyphicon glyphicon-star-empty"></span>
-                       </li>
-                       <li>|</li>
-                       <li>
 
-                          <span><i class="fa fa-facebook-square"></i></span>
-                          <span><i class="fa fa-twitter-square"></i></span>
-                          <span><i class="fa fa-google-plus-square"></i></span>
-                       </li>
-                    </ul>
-                 </div>
-              </div>
-              <hr />
+            <% if current_user.present? %>
+            <h1 class="center">Create Post</h1>
+            
+            <% post = Post.new %>
+            <%= form_with(model: post, local: true) do |f| %>
+              <fieldset style="text-align: center;">
+                <div class="form-group">
+                  <%= f.text_field :title, autofocus: true,:placeholder=>"Title",:class=>"form-control" %>
+                </div>
+                <div class="form-group">
+                  <%= f.text_area :description,:placeholder=>"Description",:class=>"form-control",:minlength=>10,maxlength: 250 %>
+                </div>
+                <div class="form-group">
+                  <%= f.file_field :image %>
+                </div>
+                <%= f.hidden_field :user_id,:value=>current_user.id %>
+                <%#= f.hidden_field :another_user_id,:value=>@player.id %>
+                <%= f.submit "Create",:class=>"btn btn-primary btn-sign-in" %>
+              </fieldset>
             <% end %>
+          <% end %>
+  
+          <hr>
+          <br />
+
+          <% Post.all.each do |post| %>
+            <div class="media">
+               <a class="pull-left" href="#">
+                <% if post.image.present? %>
+                  <%= image_tag post.image.url(:profile),class: "media-object" %>
+                <% else %>
+                  <%= image_tag "post.png",class: "media-object" %>
+                <% end %>
+               </a>
+               <%# byebug %>
+               <div class="media-body">
+                  <% if post.another_user_id.present? %>
+                    <% another_user = User.find_by_id(post.another_user_id) %>
+                    <h4 class="media-heading"><%= link_to post.title,post_path(post) %> <span class="pull-right"> By <%= link_to post.user.name ,user_path(another_user.id) %> <i class="fa fa-caret-right"></i> <%= link_to post.user.name,user_path(post.user) %> </span></h4>
+                  <% else %>
+                    <h4 class="media-heading"><%= link_to post.title,post_path(post) %><span class="pull-right"> By <%= link_to post.user.name ,user_path(post.user) %></span></h4>
+                  <% end %>
+
+                  <p><%= post.description %> <%= link_to "Read More",post_path(post),:class=>"btn btn-info btn-xs" %>
+                  </p>
+                  <ul class="list-inline list-unstyled">
+                     <li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at.to_date.strftime('%a %b %d') %> </span></li>
+                     <li>|</li>
+                     <span><i class="glyphicon glyphicon-comment"></i> <%= post.comments.count %> Comments</span>
+                     <li>|</li>
+                     <li>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                     </li>
+                     <li>|</li>
+                     <li>
+
+                        <span><i class="fa fa-facebook-square"></i></span>
+                        <span><i class="fa fa-twitter-square"></i></span>
+                        <span><i class="fa fa-google-plus-square"></i></span>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <hr />
+          <% end %>
          </div>
       </div>
       <!--/span-->

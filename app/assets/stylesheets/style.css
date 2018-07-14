@@ -28,6 +28,7 @@ img.media-object {
     height: 140px;
     width: 140px;
 }
+.center{text-align: center;}
 .text-center{
     text-align: center;
 }

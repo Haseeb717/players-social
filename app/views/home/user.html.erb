@@ -1,88 +1,95 @@
 <div class="container-fluid">
    <div class="row">
-      <div class="col-sm-3 col-md-3">
-        <% if current_user.present? %>
-         <div class="panel panel-primary">
-            <div class="panel-heading">
-               <h3 class="panel-title">My Roster</h3>
-            </div>
-            <div class="panel-body">
-               <ul class="nav ">
-                  <% current_user.follows_by_type('Player').each do |roaster| %>
-                    <% player = Player.find(roaster.followable_id) %>
-                    <li><a href="#"><%= player.name %></a></li>
-                  <% end %>
-               </ul>
-            </div>
-         </div>
-        <% end %>
-         <!-- panel -->
-      </div>
+      <%= render "/layouts/roaster" %>
       <!--/span-->
       <div class="col-sm-6 col-md-6">
         <%= render "/layouts/alerts" %>
         <div class="jumbotron custum-jumbotron">
-                  <br />
-                  <div class="media">
-                     <a class="media-left" href="#">
-                        <% if @user.image.present? %>
-                          <%= image_tag @user.image.url(:profile),class: "media-object" %>
-                        <% else %>
-                          <%= image_tag "index.jpeg",class: "media-object" %>
-                        <% end %>
-                     </a>
-                     <div class="media-body pt15">
-                        <h3 class="media-heading"><%= @user.name %></h3>
-                        <p><%= link_to "Follow",add_follow_path(@user.id),:class=>"btn btn-success" %></a>&nbsp; <a href="" class="btn btn-primary">Message</a></p>
-                     </div>
-                  </div>
-                  <br />
-                  <div class="panel panel-info">
-                     <div class="panel-heading">
-                        <h3 class="panel-title">Posts</h3>
-                     </div>
-                    
-                  </div>
+          <div class="media">
+             <a class="media-left" href="#">
+                <% if @user.image.present? %>
+                  <%= image_tag @user.image.url(:profile),class: "media-object" %>
+                <% else %>
+                  <%= image_tag "index.jpeg",class: "media-object" %>
+                <% end %>
+             </a>
+             <div class="media-body pt15">
+                <h3 class="media-heading"><%= @user.name %></h3>
+                <p><%= link_to "Follow",add_follow_path(@user.id),:class=>"btn btn-success" %></a>&nbsp; <a href="" class="btn btn-primary">Message</a></p>
+             </div>
+          </div>
+          <br />
 
-                  <% Post.all.each do |post| %>
-                    <div class="media">
-                       <a class="pull-left" href="#">
-                        <% if post.image.present? %>
-                          <%= image_tag post.image.url(:profile),class: "media-object" %>
-                        <% else %>
-                          <%= image_tag "post.png",class: "media-object" %>
-                        <% end %>
-                       </a>
-                       <div class="media-body">
-                          <h4 class="media-heading"><%= post.title %><span class="pull-right">By <%= link_to post.user.name,post_path(post) %></span></h4>
-                          <p><%= post.description %> <%= link_to "Read More",post_path(post),:class=>"btn btn-info btn-xs" %>
-                          </p>
-                          <ul class="list-inline list-unstyled">
-                             <li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at.to_date.strftime('%a %b %d') %> </span></li>
-                             <li>|</li>
-                             <span><i class="glyphicon glyphicon-comment"></i> <%= post.comments.count %> Comments</span>
-                             <li>|</li>
-                             <li>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                             </li>
-                             <li>|</li>
-                             <li>
+          <% if current_user.present? %>
+            <h1 class="center">Create Post</h1>
+            
+            <% post = Post.new %>
+            <%= form_with(model: post, local: true) do |f| %>
+              <fieldset style="text-align: center;">
+                <div class="form-group">
+                  <%= f.text_field :title, autofocus: true,:placeholder=>"Title",:class=>"form-control" %>
+                </div>
+                <div class="form-group">
+                  <%= f.text_area :description,:placeholder=>"Description",:class=>"form-control",:minlength=>10,maxlength: 250 %>
+                </div>
+                <div class="form-group">
+                  <%= f.file_field :image %>
+                </div>
+                <%= f.hidden_field :user_id,:value=>current_user.id %>
+                <%= f.hidden_field :another_user_id,:value=>@user.id %>
+                <%= f.submit "Create",:class=>"btn btn-primary btn-sign-in" %>
+              </fieldset>
+            <% end %>
+          <% end %>
+  
+          <hr>
+          <br />
+          
+          <div class="panel panel-info">
+             <div class="panel-heading">
+                <h3 class="panel-title">Posts</h3>
+             </div>
+          </div>
 
-                                <span><i class="fa fa-facebook-square"></i></span>
-                                <span><i class="fa fa-twitter-square"></i></span>
-                                <span><i class="fa fa-google-plus-square"></i></span>
-                             </li>
-                          </ul>
-                       </div>
-                    </div>
-                    <hr /> 
-                  
-                  <% end %>
+          <% Post.where(:user_id=>@user.id).all.each do |post| %>
+            <div class="media">
+               <a class="pull-left" href="#">
+                <% if post.image.present? %>
+                  <%= image_tag post.image.url(:profile),class: "media-object" %>
+                <% else %>
+                  <%= image_tag "post.png",class: "media-object" %>
+                <% end %>
+               </a>
+               <div class="media-body">
+                  <h4 class="media-heading"><%= post.title %><span class="pull-right">By <%= link_to post.user.name,post_path(post) %></span></h4>
+                  <p><%= post.description %> <%= link_to "Read More",post_path(post),:class=>"btn btn-info btn-xs" %>
+                  </p>
+                  <ul class="list-inline list-unstyled">
+                     <li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at.to_date.strftime('%a %b %d') %> </span></li>
+                     <li>|</li>
+                     <span><i class="glyphicon glyphicon-comment"></i> <%= post.comments.count %> Comments</span>
+                     <li>|</li>
+                     <li>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                     </li>
+                     <li>|</li>
+                     <li>
+
+                        <span><i class="fa fa-facebook-square"></i></span>
+                        <span><i class="fa fa-twitter-square"></i></span>
+                        <span><i class="fa fa-google-plus-square"></i></span>
+                     </li>
+                  </ul>
                </div>
+            </div>
+            <hr /> 
+          
+          <% end %>
+       </div>
       </div>
       <!--/span-->
       <div class="col-sm-3 col-md-3">
