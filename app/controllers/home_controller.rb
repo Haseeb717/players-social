@@ -20,7 +20,7 @@ class HomeController < ApplicationController
   	current_user.follow(player)
 
     respond_to do |format|
-        format.html { redirect_to players_path, notice: 'Player added to Roaster list' }
+        format.html { redirect_to players_path, notice: 'Player added to Roster list' }
     end
   end
 
@@ -38,7 +38,7 @@ class HomeController < ApplicationController
     current_user.stop_following(player)
 
     respond_to do |format|
-      format.html { redirect_to players_path, notice: 'Player removed from Roaster list' }
+      format.html { redirect_to players_path, notice: 'Player removed from Roster list' }
     end
   end
 
