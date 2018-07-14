@@ -50,7 +50,7 @@
              </div>
           </div>
 
-          <% Post.where('user_id =? and spam !=?',@user.id,true).all.each do |post| %>
+          <% Post.where('another_user_id =? and spam !=?',@user.id,true).order('created_at desc').all.each do |post| %>
             <div class="media">
                <a class="pull-left" href="#">
                 <% if post.image.present? %>

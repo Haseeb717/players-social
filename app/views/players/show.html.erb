@@ -45,7 +45,7 @@
           <hr>
           
           <!--Testimonial Section-->
-          <% @player.posts.where('spam !=?',true).each do |post| %>
+          <% @player.posts.where('spam !=?',true).order('created_at desc').each do |post| %>
 	          <div class="fb-testimonial">
 	             <div class="fb-testimonial-inner">
 	                <div class="fb-profile">
