@@ -12,6 +12,9 @@ class HomeController < ApplicationController
   	@users = User.all
   end
 
+  def my_posts
+  end
+
   def add_roaster
   	player = Player.find(params["id"])
   	current_user.follow(player)

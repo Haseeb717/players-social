@@ -5,12 +5,8 @@
       <div class="col-sm-6 col-md-6">
       	<%= render "/layouts/alerts" %>
          <div class="jumbotron custum-jumbotron">
-            <% if current_user.present? %>
-              <h1>Hello, <%= "#{current_user.name}" %></h1>
-            <% end %>
-            <hr />
-
-            <% if current_user.present? %>
+            
+          <% if current_user.present? %>
             <h1 class="center">Create Post</h1>
             
             <% post = Post.new %>
@@ -35,7 +31,7 @@
           <hr>
           <br />
 
-          <% Post.where('spam !=?',true).all.each do |post| %>
+          <% Post.where('spam !=? and user_id =?',true,current_user.id).all.each do |post| %>
             <div class="media">
                <a class="pull-left" href="#">
                 <% if post.image.present? %>
@@ -70,7 +66,7 @@
       <div class="col-sm-3 col-md-3">
          <div class="panel panel-primary">
             <div class="panel-heading">
-               <h3 class="panel-title">Who  to follow</h3>
+               <h3 class="panel-title">Who to follow</h3>
             </div>
             <div class="panel-body">
                <ul class="nav">

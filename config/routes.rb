@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get 'add_follow/:id' => 'home#add_follow', as: :add_follow
   get 'remove_follow/:id' => 'home#remove_follow', as: :remove_follow
   get 'remove_roaster/:id' => 'home#remove_roaster', as: :remove_roaster
+  get 'my_posts' => 'home#my_posts', as: :my_posts
+
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
