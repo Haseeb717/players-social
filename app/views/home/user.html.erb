@@ -61,7 +61,7 @@
                </a>
                <div class="media-body">
                   <h4 class="media-heading"><%= post.title %><span class="pull-right">By <%= link_to post.user.name,post_path(post) %></span></h4>
-                  <p><%= post.description %> <%= link_to "Read More",post_path(post),:class=>"btn btn-info btn-xs" %>
+                  <p><%= post.description %> <%#= link_to "Read More",post_path(post),:class=>"btn btn-info btn-xs" %>
                   </p>
                   <ul class="list-inline list-unstyled">
                      <li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at.to_date.strftime('%a %b %d') %> </span></li>
