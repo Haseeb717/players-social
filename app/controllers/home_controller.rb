@@ -29,4 +29,22 @@ class HomeController < ApplicationController
       format.html { redirect_to users_path, notice: 'User added to followings list' }
     end
   end
+
+  def remove_roaster
+    player = Player.find(params["id"])
+    current_user.stop_following(player)
+
+    respond_to do |format|
+      format.html { redirect_to players_path, notice: 'Player removed from Roaster list' }
+    end
+  end
+
+  def remove_follow
+    user = User.find(params["id"])
+    current_user.stop_following(user)
+
+    respond_to do |format|
+      format.html { redirect_to users_path, notice: 'User removed from followings list' }
+    end
+  end
 end

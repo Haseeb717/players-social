@@ -1,6 +1,6 @@
 ActiveAdmin.register Player do
 
-permit_params :name, :email, :about,:image
+permit_params :name, :email, :about,:image,:spam
 
 form :html => { :enctype => "multipart/form-data" } do |f|
   f.inputs "Players" do
