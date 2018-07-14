@@ -18,10 +18,12 @@
                  </a>
                  <div class="media-body">
                     <h4 class="media-heading"><%= link_to player.name,user_path(player.id) %>
-                    <% if current_user.following?(player) %>
-                      <span class="pull-right"><%= link_to "UnFollow",remove_follow_path(player.id) %></span></h4>
-                    <% else %>
-                      <span class="pull-right"><%= link_to "Follow",add_follow_path(player.id) %></span></h4>
+                    <% if current_user.present? %>
+                      <% if current_user.following?(player) %>
+                        <span class="pull-right"><%= link_to "UnFollow",remove_follow_path(player.id) %></span></h4>
+                      <% else %>
+                        <span class="pull-right"><%= link_to "Follow",add_follow_path(player.id) %></span></h4>
+                      <% end %>
                     <% end %>
                  </div>
               </div>
