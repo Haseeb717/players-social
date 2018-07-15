@@ -60,33 +60,20 @@
                 <% end %>
                </a>
                <div class="media-body">
-                  <h4 class="media-heading"><%= post.title %><span class="pull-right">By <%= link_to post.user.name,post_path(post) %></span></h4>
+                  <h4 class="media-heading"><%#= post.title %><span class="pull-right">By <%= link_to post.user.name,post_path(post) %></span></h4>
                   <p><%= post.description %> <%#= link_to "Read More",post_path(post),:class=>"btn btn-info btn-xs" %>
                   </p>
                   <ul class="list-inline list-unstyled">
                      <li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at.to_date.strftime('%a %b %d') %> </span></li>
                      <li>|</li>
-                     <span><i class="glyphicon glyphicon-comment"></i> <%= post.comments.count %> Comments</span>
-                     <li>|</li>
-                     <li>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                     </li>
-                     <li>|</li>
-                     <li>
-
-                        <span><i class="fa fa-facebook-square"></i></span>
-                        <span><i class="fa fa-twitter-square"></i></span>
-                        <span><i class="fa fa-google-plus-square"></i></span>
-                     </li>
+                     <span class="post_comment" id="<%= "#{post.id}" %>"><i class="glyphicon glyphicon-comment"></i> <%= post.comments.count %> Comments</span>
                   </ul>
                </div>
             </div>
+            <div class="comments_section" id="<%= "comments_#{post.id}" %>">
+              <%= render :partial => "/posts/comments", locals: {post: post} %>
+            </div>
             <hr /> 
-          
           <% end %>
        </div>
       </div>

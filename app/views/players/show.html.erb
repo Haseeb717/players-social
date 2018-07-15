@@ -26,7 +26,7 @@
            </div>
           </div>
           <div class="clearfix"></div>
-
+          <br>
           <% if current_user.present? %>
             
             <% post = Post.new %>
@@ -52,28 +52,29 @@
           
           <!--Testimonial Section-->
           <% @player.posts.where('spam !=?',true).order('created_at desc').each do |post| %>
-	          <div class="fb-testimonial">
-	             <div class="fb-testimonial-inner">
-	                <div class="fb-profile">
-	                	<% if post.image.present? %>
-	                    <%= link_to post_path(post) do %>
-                        <%= image_tag post.image.url(:profile),class: "facebook-thumb" %>
-                      <% end %>
-	                  <% else %>
-                      <%= link_to post_path(post) do %>
-	                      <%= image_tag "post.png",class: "facebook-thumb" %>
-                      <% end %>
-	                  <% end %>
-	        
-	                   <p class="facebook-name"><%= post.player.name %> <i class="fa fa-caret-left"></i> <%= link_to post.user.name,user_path(post.user) %> <br><span class="facebook-date"><%= post.created_at.to_date.strftime('%a %b %d') %>  <i class="fa fa-globe"></i></span></p>
-	                </div>
-	                <div class="fb-testimonial-copy">
-	                   <p><%= post.description %>
-	                   </p>
-	                </div>
-	             </div>
-	          </div>
-	          <hr />
+	          <div class="media">
+               <a class="pull-left" href="#">
+                <% if post.image.present? %>
+                  <%= image_tag post.image.url(:profile),class: "media-object" %>
+                <% else %>
+                  <%= image_tag "post.png",class: "media-object" %>
+                <% end %>
+               </a>
+               <div class="media-body">
+                  <h4 class="media-heading"><%#= post.title %><span class="pull-right">By <%= link_to post.user.name,post_path(post) %></span></h4>
+                  <p><%= post.description %> <%#= link_to "Read More",post_path(post),:class=>"btn btn-info btn-xs" %>
+                  </p>
+                  <ul class="list-inline list-unstyled">
+                     <li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at.to_date.strftime('%a %b %d') %> </span></li>
+                     <li>|</li>
+                     <span class="post_comment" id="<%= "#{post.id}" %>"><i class="glyphicon glyphicon-comment"></i> <%= post.comments.count %> Comments</span>
+                  </ul>
+               </div>
+            </div>
+            <div class="comments_section" id="<%= "comments_#{post.id}" %>">
+              <%= render :partial => "/posts/comments", locals: {post: post} %>
+            </div>
+            <hr />
           <% end %>
           
        </div>
