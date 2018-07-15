@@ -47,10 +47,10 @@
              <div class="br-title">Trending Now:</div>
              <p class="marquee">
                 <ul>
-                  <% Post.where('player_id IS NOT ?',nil).uniq.last(10).each do |post| %>
-                    <% user_name = User.find_by_id(post.user_id).name %>
-                    <% player_name = Player.find_by_id(post.player_id).name %>
-                    <li style="margin-left: 15px;margin-right: 15px"><%= link_to "#{player_name.capitalize}",player_path(post.player_id)  %></li>
+                  <% Player.joins(:posts).select("players.*, count(posts.id) as scount").group("players.id").order("scount DESC").last(10).each do |player| %>
+                    <%# user_name = User.find_by_id(post.user_id).name %>
+                    <% player_name = Player.find_by_id(player.id).name %>
+                    <li style="margin-left: 15px;margin-right: 15px"><%= link_to "#{player_name.capitalize}",player_path(player)  %></li>
                   <% end %>
                 </ul>
              </p>
