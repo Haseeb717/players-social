@@ -20,7 +20,7 @@ class HomeController < ApplicationController
   	current_user.follow(player)
 
     respond_to do |format|
-        format.html { redirect_to players_path, notice: 'Player added to Roster list' }
+      format.html { redirect_to players_path, notice: 'Player added to Roster list' }
     end
   end
 
@@ -49,5 +49,12 @@ class HomeController < ApplicationController
     respond_to do |format|
       format.html { redirect_to users_path, notice: 'User removed from followings list' }
     end
+  end
+
+  def search
+    @query = params["query"]
+    @users = User.where('name LIKE (?)',"%#{@query}%")
+
+    @players = Player.where('name LIKE (?)',"%#{@query}%")
   end
 end

@@ -32,11 +32,14 @@
                   	<%= link_to "Sign up", new_user_registration_path,:class=>"btn btn-sm btn-info" %>
                   <% end %>
                </ul>
-               <form class="navbar-form navbar-right">
+
+                <%= form_tag("/search", :method => :get,:class=>"navbar-form navbar-right" ) do %>
                   <div class="form-group">
-                     <input type="text" class="form-control" placeholder="Search Nampit">
+                    <%= text_field_tag :query,@query,:placeholder=>"Search Nampit",:class=>"form-control" %>
                   </div>
-               </form>
+                  
+                  <%= submit_tag("Search",:class=>"btn btn-success") %>
+                <% end %>
             </div>
             <!--/.navbar-collapse -->
          </div>

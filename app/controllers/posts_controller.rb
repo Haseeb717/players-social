@@ -25,9 +25,15 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(post_params)
-
+    tags = post_params["description"].scan(/#\w+/)
+    tags.each do |tag|
+      post_params["description"].slice! tag
+    end
     respond_to do |format|
       if @post.save!
+        tags.each do |tag|
+          Tag.create(:post_id=>@post.id,:title=>tag)
+        end
         format.html { redirect_back fallback_location: root_path, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else

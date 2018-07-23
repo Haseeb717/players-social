@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'remove_follow/:id' => 'home#remove_follow', as: :remove_follow
   get 'remove_roaster/:id' => 'home#remove_roaster', as: :remove_roaster
   get 'my_posts' => 'home#my_posts', as: :my_posts
-
+  get 'search' => 'home#search',as: :search
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

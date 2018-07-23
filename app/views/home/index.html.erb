@@ -53,7 +53,8 @@
                     <h4 class="media-heading"><%#= link_to post.title,post_path(post) %><span class="pull-right"> By <%= link_to post.user.name ,user_path(post.user) %></span></h4>
                   <% end %>
 
-                  <p><%= post.description %>
+                  <p><%= post.description %> 
+                    <% post.tags.each do |tag| %> <span class="tags"><%= tag.title %></span> <% end %>
                   </p>
                   <ul class="list-inline list-unstyled">
                      <li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at.to_date.strftime('%a %b %d') %> </span></li>

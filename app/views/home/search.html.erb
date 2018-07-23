@@ -1,0 +1,56 @@
+<div class="container-fluid">
+   <div class="row">
+      <%= render "/layouts/roaster" %>
+      <!--/span-->
+      <div class="col-sm-6 col-md-6">
+        <%= render "/layouts/alerts" %>
+        <div class="jumbotron custum-jumbotron">
+          <% @players.each do |player| %>
+            <div class="media">
+              <a class="pull-left" href="#">
+              <% if player.image.present? %>
+                <%= image_tag player.image.url(:profile),class: "media-object" %>
+              <% else %>
+                <%= image_tag "index.jpeg",class: "media-object" %>
+              <% end %>
+             </a>
+             <div class="media-body">
+                <h4 class="media-heading"><%= link_to player.name,player_path(player) %>
+                <% if current_user.present? %>
+                  <% if current_user.following?(player) %>
+                    <span class="pull-right"><%= link_to "Remove from Roster",remove_roaster_path(player.id),:class=>"btn btn-success" %></span></h4>
+                  <% else %>
+                    <span class="pull-right"><%= link_to "Add to Roster",add_roaster_path(player.id),:class=>"btn btn-success" %></span></h4>
+                  <% end %>
+                <% end %>
+                <p><%= player.about %></p>
+             </div>
+            </div>
+            <div class="clearfix"></div>
+          <% end %>
+
+          <% @users.each do |user| %>
+            <div class="media">
+              <a class="media-left" href="#">
+                  <% if user.image.present? %>
+                    <%= image_tag user.image.url(:profile),class: "media-object" %>
+                  <% else %>
+                    <%= image_tag "index.jpeg",class: "media-object" %>
+                  <% end %>
+               </a>
+               <div class="media-body pt15">
+                  <h3 class="media-heading"><%= user.name %></h3>
+                  <p><%= link_to "Follow",add_follow_path(user.id),:class=>"btn btn-success" %></a></p>
+               </div>
+            </div>
+            <br />
+          <% end %>
+        </div>
+      </div>
+      <!--/span-->
+      <%= render "/layouts/right_panel" %>
+      <!--/span-->
+   </div>
+   <!--/row-->
+</div>
+
