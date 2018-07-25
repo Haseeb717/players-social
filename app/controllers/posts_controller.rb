@@ -26,13 +26,38 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     tags = post_params["description"].scan(/#\w+/)
+    mentions = post_params["description"].scan(/@\w+/)
+    valid_users = []
+    valid_players = []
     tags.each do |tag|
       post_params["description"].slice! tag
     end
+
+    mentions.each do |mention|
+      vp = mention[1..-1]
+      user = User.find_by_name(vp)
+      if user
+        valid_users << user
+        post_params["description"].slice! mention
+      else
+        player = Player.find_by_name(vp)
+        if player
+          valid_players << player
+          post_params["description"].slice! mention
+        end
+      end
+    end
+
     respond_to do |format|
       if @post.save!
         tags.each do |tag|
           Tag.create(:post_id=>@post.id,:title=>tag)
+        end
+        valid_players.each do |player|
+          TagUser.create(:post_id=>@post.id,:tag_id=>player.id,:tag_type=>"Player")
+        end
+        valid_users.each do |user|
+          TagUser.create(:post_id=>@post.id,:tag_id=>user.id,:tag_type=>"User")
         end
         format.html { redirect_back fallback_location: root_path, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }

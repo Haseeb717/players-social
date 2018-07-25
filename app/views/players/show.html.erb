@@ -63,6 +63,16 @@
                <div class="media-body">
                   <h4 class="media-heading"><%#= post.title %><span class="pull-right">By <%= link_to post.user.name,post_path(post) %></span></h4>
                   <p><%= post.description %> <% post.tags.each do |tag| %> <span class="tags"><%= tag.title %></span> <% end %>
+                    <% post.tag_users.each do |tag| %>
+                      <% if tag.tag_type == "Player" %>
+                        <% player = Player.find_by_id(tag.tag_id) %>
+                        <%= link_to player_path(player) do %><span class="tags">@<%= player.name %></span> <% end %>
+                      <% elsif tag.tag_type == "User" %>
+                        <% user = User.find_by_id(tag.tag_id) %>
+                        <%= link_to user_path(user) do %><span class="tags">@<%= user.name %></span> <% end %>
+                        
+                      <% end %>
+                    <% end %>
                   </p>
                   <ul class="list-inline list-unstyled">
                      <li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at.to_date.strftime('%a %b %d') %> </span></li>
