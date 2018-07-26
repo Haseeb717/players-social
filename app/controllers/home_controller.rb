@@ -53,8 +53,8 @@ class HomeController < ApplicationController
 
   def search
     @query = params["query"]
-    @users = User.where('name LIKE (?)',"%#{@query}%")
+    @users = User.where('lower(name) LIKE (?)',"%#{@query.downcase}%")
 
-    @players = Player.where('name LIKE (?)',"%#{@query}%")
+    @players = Player.where('lower(name) LIKE (?)',"%#{@query.downcase}%")
   end
 end
