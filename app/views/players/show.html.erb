@@ -14,7 +14,7 @@
             <% end %>
            </a>
            <div class="media-body">
-              <h4 class="media-heading"><%= link_to @player.name,player_path(@player) %>
+              <h4 class="media-heading"><%= link_to @player.name,player_path(@player) %> (<%= @player.username %>)
               <% if current_user.present? %>
                 <% if current_user.following?(@player) %>
                   <span class="pull-right"><%= link_to "Remove from Roster",remove_roaster_path(@player.id),:class=>"btn btn-success" %></span></h4>
@@ -51,8 +51,18 @@
           <hr>
           
           <!--Testimonial Section-->
-          <% @player.posts.where('spam !=?',true).order('created_at desc').each do |post| %>
-	          <div class="media">
+          <% posts = @player.posts.where('spam !=?',true) %>
+    
+          <% post_ids = posts.pluck(:id) %>
+          <% TagUser.where('tag_id =? and tag_type =?',"#{@player.id}","Player").all.each do |tag| %>
+            <% post = Post.where(:id=>tag.post_id) %>
+            <% if !post_ids.include? tag.post_id %>
+              <% posts = posts + post %>
+            <% end %>
+          <% end %>
+
+          <% posts.sort_by { |h| h[:created_at] }.reverse!.each do |post| %>
+            <div class="media">
                <a class="pull-left" href="#">
                 <% if post.image.present? %>
                   <%= image_tag post.image.url(:profile),class: "media-object" %>
@@ -86,6 +96,7 @@
             </div>
             <hr />
           <% end %>
+
           
        </div>
       </div>

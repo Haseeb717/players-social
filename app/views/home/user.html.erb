@@ -49,7 +49,8 @@
              </div>
           </div>
 
-          <% Post.where('another_user_id =? and spam !=?',@user.id,true).order('created_at desc').all.each do |post| %>
+          <% posts = Post.where('another_user_id =? and spam !=?',@user.id,true) %>
+          <% posts.order('created_at desc').all.each do |post| %>
             <div class="media">
                <a class="pull-left" href="#">
                 <% if post.image.present? %>
@@ -82,6 +83,46 @@
             <div class="comments_section" id="<%= "comments_#{post.id}" %>">
               <%= render :partial => "/posts/comments", locals: {post: post} %>
             </div>
+            <hr /> 
+          <% end %>
+
+          <% post_ids = posts.pluck(:id) %>
+          <% TagUser.where('tag_id =? and tag_type =?',"#{@user.id}","User").order('created_at desc').all.each do |tag| %>
+            <% post = Post.find_by_id(tag.tag_id) %>
+            <% if !post_ids.include? tag.tag_id %>
+              <div class="media">
+                 <a class="pull-left" href="#">
+                  <% if post.image.present? %>
+                    <%= image_tag post.image.url(:profile),class: "media-object" %>
+                  <% else %>
+                    <%= image_tag "post.png",class: "media-object" %>
+                  <% end %>
+                 </a>
+                 <div class="media-body">
+                    <h4 class="media-heading"><%#= post.title %><span class="pull-right">By <%= link_to post.user.name,post_path(post) %></span></h4>
+                    <p><%= post.description %> <% post.tags.each do |tag| %> <span class="tags"><%= tag.title %></span> <% end %>
+                      <% post.tag_users.each do |tag| %>
+                        <% if tag.tag_type == "Player" %>
+                          <% player = Player.find_by_id(tag.tag_id) %>
+                          <%= link_to player_path(player) do %><span class="tags">@<%= player.name %></span> <% end %>
+                        <% elsif tag.tag_type == "User" %>
+                          <% user = User.find_by_id(tag.tag_id) %>
+                          <%= link_to user_path(user) do %><span class="tags">@<%= user.name %></span> <% end %>
+                          
+                        <% end %>
+                      <% end %>
+                    </p>
+                    <ul class="list-inline list-unstyled">
+                       <li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at.to_date.strftime('%a %b %d') %> </span></li>
+                       <li>|</li>
+                       <span class="post_comment" id="<%= "#{post.id}" %>"><i class="glyphicon glyphicon-comment"></i> <%= post.comments.count %> Comments</span>
+                    </ul>
+                 </div>
+              </div>
+              <div class="comments_section" id="<%= "comments_#{post.id}" %>">
+                <%= render :partial => "/posts/comments", locals: {post: post} %>
+              </div>
+            <% end %>
             <hr /> 
           <% end %>
        </div>

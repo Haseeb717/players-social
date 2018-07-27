@@ -35,12 +35,12 @@ class PostsController < ApplicationController
 
     mentions.each do |mention|
       vp = mention[1..-1]
-      user = User.find_by_name(vp)
+      user = User.where('lower(name) =?',vp.downcase).first
       if user
         valid_users << user
         post_params["description"].slice! mention
       else
-        player = Player.find_by_name(vp)
+        player = Player.where('lower(username) =?',vp.downcase).first
         if player
           valid_players << player
           post_params["description"].slice! mention

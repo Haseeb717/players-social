@@ -17,7 +17,7 @@
                   <% end %>
                  </a>
                  <div class="media-body">
-                    <h4 class="media-heading"><%= link_to player.name,player_path(player) %>
+                    <h4 class="media-heading"><%= link_to player.name,player_path(player) %> (<%= player.username %>)
                     <% if current_user.present? %>
                       <% if current_user.following?(player) %>
                         <span class="pull-right"><%= link_to "Remove from Roster",remove_roaster_path(player.id) %></span></h4>
