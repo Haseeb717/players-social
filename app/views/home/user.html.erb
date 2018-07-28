@@ -14,7 +14,7 @@
                 <% end %>
              </a>
              <div class="media-body pt15">
-                <h3 class="media-heading"><%= @user.name %></h3>
+                <h3 class="media-heading"><%= @user.name %> (<%= @user.user_id %>)</h3>
                 <p><%= link_to "Follow",add_follow_path(@user.id),:class=>"btn btn-success" %></a></p>
              </div>
           </div>
@@ -50,7 +50,18 @@
           </div>
 
           <% posts = Post.where('another_user_id =? and spam !=?',@user.id,true) %>
-          <% posts.order('created_at desc').all.each do |post| %>
+    
+          <% post_ids = posts.pluck(:id) %>
+          <% TagUser.where('tag_id =? and tag_type =?',"#{@user.id}","User").all.each do |tag| %>
+            <% post = Post.where(:id=>tag.post_id) %>
+            <% if !post_ids.include? tag.post_id %>
+              <% posts = posts + post %>
+            <% end %>
+          <% end %>
+
+          <% posts.sort_by { |h| h[:created_at] }.reverse!.each do |post| %>
+
+          
             <div class="media">
                <a class="pull-left" href="#">
                 <% if post.image.present? %>
@@ -60,7 +71,7 @@
                 <% end %>
                </a>
                <div class="media-body">
-                  <h4 class="media-heading"><%#= post.title %><span class="pull-right">By <%= link_to post.user.name,post_path(post) %></span></h4>
+                  <h4 class="media-heading"><%#= post.title %><span class="pull-right">By <%= link_to post.user.name,post_path(post) %> (<%= post.user.user_id %>)</span></h4>
                   <p><%= post.description %> <% post.tags.each do |tag| %> <span class="tags"><%= tag.title %></span> <% end %>
                     <% post.tag_users.each do |tag| %>
                       <% if tag.tag_type == "Player" %>

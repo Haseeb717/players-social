@@ -35,7 +35,7 @@ class PostsController < ApplicationController
 
     mentions.each do |mention|
       vp = mention[1..-1]
-      user = User.where('lower(name) =?',vp.downcase).first
+      user = User.where('lower(user_id) =?',vp.downcase).first
       if user
         valid_users << user
         post_params["description"].slice! mention

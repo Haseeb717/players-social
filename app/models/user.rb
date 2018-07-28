@@ -14,4 +14,11 @@ class User < ApplicationRecord
 
   acts_as_followable
   acts_as_follower
+
+  after_create :update_user_id
+
+  def update_user_id
+    name = self.name + "_" + self.id.to_s
+    self.update_attributes(:user_id=>name)
+  end
 end

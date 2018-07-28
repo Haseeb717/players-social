@@ -71,7 +71,7 @@
                 <% end %>
                </a>
                <div class="media-body">
-                  <h4 class="media-heading"><%#= post.title %><span class="pull-right">By <%= link_to post.user.name,post_path(post) %></span></h4>
+                  <h4 class="media-heading"><%#= post.title %><span class="pull-right">By <%= link_to post.user.name,post_path(post) %> (<%= post.user.user_id %>)</span></h4>
                   <p><%= post.description %> <% post.tags.each do |tag| %> <span class="tags"><%= tag.title %></span> <% end %>
                     <% post.tag_users.each do |tag| %>
                       <% if tag.tag_type == "Player" %>

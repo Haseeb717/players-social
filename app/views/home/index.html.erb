@@ -50,7 +50,7 @@
                     <% another_user = User.find_by_id(post.another_user_id) %>
                     <h4 class="media-heading"><%#= link_to post.title,post_path(post) %> <span class="pull-right"> By <%= link_to post.user.name ,user_path(another_user.id) %> <i class="fa fa-caret-right"></i> <%= link_to post.user.name,user_path(post.user) %> </span></h4>
                   <% else %>
-                    <h4 class="media-heading"><%#= link_to post.title,post_path(post) %><span class="pull-right"> By <%= link_to post.user.name ,user_path(post.user) %></span></h4>
+                    <h4 class="media-heading"><%#= link_to post.title,post_path(post) %><span class="pull-right"> By <%= link_to post.user.name ,user_path(post.user) %> (<%= post.user.user_id %>)</span></h4> 
                   <% end %>
 
                   <p><%= post.description %> 
