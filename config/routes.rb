@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get 'message/index'
+
+  get 'message/create'
+
+  get 'message/show'
+
+  get 'message/new'
+
   root 'home#index'
   get 'user/:id' => 'home#user',as: :user
   get 'users' => 'home#users',as: :users

@@ -24,6 +24,7 @@
                </ul>
                <ul class="nav navbar-nav navbar-right links">
                		<% if user_signed_in? %>
+                    <%= link_to "Messages", "#",:class=>"btn btn-sm btn-success"%>
                			<%= link_to "Edit Profile", edit_user_registration_path,:class=>"btn btn-sm btn-info"%>
                   	<%= link_to "Logout", destroy_user_session_path, method: :delete,:class=>"btn btn-sm btn-danger"%>
                     <%#= link_to "My Posts",my_posts_path,:class=>"btn btn-sm btn-success" %>
