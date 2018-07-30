@@ -76,10 +76,10 @@
                     <% post.tag_users.each do |tag| %>
                       <% if tag.tag_type == "Player" %>
                         <% player = Player.find_by_id(tag.tag_id) %>
-                        <%= link_to player_path(player) do %><span class="tags">@<%= player.name %></span> <% end %>
+                        <%= link_to player_path(player) do %><span class="tags">@<%= player.username %></span> <% end %>
                       <% elsif tag.tag_type == "User" %>
                         <% user = User.find_by_id(tag.tag_id) %>
-                        <%= link_to user_path(user) do %><span class="tags">@<%= user.name %></span> <% end %>
+                        <%= link_to user_path(user) do %><span class="tags">@<%= user.user_id %></span> <% end %>
                         
                       <% end %>
                     <% end %>
