@@ -5,4 +5,15 @@ class Player < ApplicationRecord
                                     :content_type => /^image\/(png|gif|jpeg|jpg)/,
                                     :message => 'only (png/gif/jpeg/jpg) images'
     has_many :posts
+    validate :uniqee_user_id, on: :create
+    validates :username, uniqueness: { message: "User Name should be uniqee" }, :case_sensitive => false
+
+    def uniqee_user_id
+	    user_id = self.user_id
+	    users = Player.where('lower(username) =?',username.downcase)
+	    if users.count > 0
+	      errors.add(:username, "Username must be uniqee")
+	    end
+	  end
+
 end

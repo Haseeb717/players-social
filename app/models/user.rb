@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :posts
   has_many :comments
 
-  validates :user_id, uniqueness: { message: "User ID should be uniqee" }
+  validate :uniqee_user_id, on: :create
 
   has_attached_file :image, styles: { small: "64x64", med: "100x100", profile: "140x140" }
 	validates_attachment_content_type :image, 
@@ -17,5 +17,11 @@ class User < ApplicationRecord
   acts_as_followable
   acts_as_follower
 
-  
+  def uniqee_user_id
+    user_id = self.user_id
+    users = User.where('lower(user_id) =?',user_id.downcase)
+    if users.count > 0
+      errors.add(:user_id, "User Id must be uniqee")
+    end
+  end
 end
