@@ -7,6 +7,7 @@ class Player < ApplicationRecord
     has_many :posts
     validate :uniqee_user_id, on: :create
     validates :username, uniqueness: { message: "User Name should be uniqee" }, :case_sensitive => false
+    after_create :update_username
 
     def uniqee_user_id
 	    user_id = self.user_id
@@ -14,6 +15,10 @@ class Player < ApplicationRecord
 	    if users.count > 0
 	      errors.add(:username, "Username must be uniqee")
 	    end
+	  end
+
+	  def update_username
+	  	self.update_attributes(:username=>self.username.downcase)
 	  end
 
 end

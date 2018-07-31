@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   has_many :posts
   has_many :comments
+  after_create :update_username
+
 
   validate :uniqee_user_id, on: :create
 
@@ -23,5 +25,9 @@ class User < ApplicationRecord
     if users.count > 0
       errors.add(:user_id, "User Id must be uniqee")
     end
+  end
+
+  def update_username
+    self.update_attributes(:user_id=>self.user_id.downcase)
   end
 end
