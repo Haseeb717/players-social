@@ -10,7 +10,7 @@ class Player < ApplicationRecord
     after_create :update_username
 
     def uniqee_user_id
-	    user_id = self.user_id
+	    user_id = self.username
 	    users = Player.where('lower(username) =?',username.downcase)
 	    if users.count > 0
 	      errors.add(:username, "Username must be uniqee")
