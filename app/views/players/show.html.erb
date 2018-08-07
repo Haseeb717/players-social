@@ -72,15 +72,21 @@
                </a>
                <div class="media-body">
                   <h4 class="media-heading"><%#= post.title %><span class="pull-right">By <%= link_to post.user.name,post_path(post) %> (<%= post.user.user_id %>)</span></h4>
-                  <p><%= post.description %> <% post.tags.each do |tag| %> <span class="tags"><%= tag.title %></span> <% end %>
-                    <% post.tag_users.each do |tag| %>
-                      <% if tag.tag_type == "Player" %>
-                        <% player = Player.find_by_id(tag.tag_id) %>
-                        <%= link_to player_path(player) do %><span class="tags">@<%= player.username %></span> <% end %>
-                      <% elsif tag.tag_type == "User" %>
-                        <% user = User.find_by_id(tag.tag_id) %>
-                        <%= link_to user_path(user) do %><span class="tags">@<%= user.user_id %></span> <% end %>
-                        
+                  <p>
+                    <% post.description.split(" ").each do |word| %>
+                      <% if word.include? "@" %>
+                        <% vp = word[1..-1] %>
+                        <% user = User.where('lower(user_id) =?',vp.downcase).first %>
+                        <% if user %>
+                          <%= link_to user_path(user) do %><span class="tags">@<%= user.user_id %></span> <% end %>
+                        <% else %>
+                          <% player = Player.where('lower(username) =?',vp.downcase).first %>
+                          <% if player %>
+                            <%= link_to player_path(player) do %><span class="tags">@<%= player.username %></span> <% end %>
+                          <% end %>
+                        <% end %>
+                      <% else %>
+                        <%= word %>
                       <% end %>
                     <% end %>
                   </p>

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'remove_roaster/:id' => 'home#remove_roaster', as: :remove_roaster
   get 'my_posts' => 'home#my_posts', as: :my_posts
   get 'search' => 'home#search',as: :search
+  get 'notifications' => 'home#notifications',as: :notifications
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

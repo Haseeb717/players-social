@@ -38,12 +38,10 @@ class PostsController < ApplicationController
       user = User.where('lower(user_id) =?',vp.downcase).first
       if user
         valid_users << user
-        post_params["description"].slice! mention
       else
         player = Player.where('lower(username) =?',vp.downcase).first
         if player
           valid_players << player
-          post_params["description"].slice! mention
         end
       end
     end

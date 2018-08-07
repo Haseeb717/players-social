@@ -15,6 +15,10 @@ class HomeController < ApplicationController
   def my_posts
   end
 
+  def notifications
+    @tags = TagUser.where('tag_id =? and tag_type =?',"#{current_user.id}","User").order('created_at desc')
+  end
+
   def add_roaster
   	player = Player.find(params["id"])
   	current_user.follow(player)

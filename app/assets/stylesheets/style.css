@@ -28,6 +28,7 @@ img.media-object {
     height: 140px;
     width: 140px;
 }
+.unread{background-color: #e4e9f2 }
 .media-object-small{height: 64px;width: 64px;}
 .post_comment{ cursor: pointer; }
 .comments_section{ display: none; }

@@ -3,41 +3,18 @@
       <%= render "/layouts/roaster" %>
       <!--/span-->
       <div class="col-sm-6 col-md-6">
-      	<%= render "/layouts/alerts" %>
-         <div class="jumbotron custum-jumbotron">
-            <% if current_user.present? %>
-              
-                <% if current_user.image.present? %>
-                  <%= image_tag current_user.image.url(:small),class: "media-object-small" %>
-                <% else %>
-                  <%= image_tag "index.jpeg",class: "media-object-small" %>
-                <% end %>
+        <%= render "/layouts/alerts" %>
+        <div class="jumbotron custum-jumbotron">
+          
+          <div class="panel panel-info">
+             <div class="panel-heading">
+                <h3 class="panel-title">Notifications</h3>
+             </div>
+          </div>
 
-              <h1 style="display: inline;">Hello, <%= "#{current_user.name}" %></h1>
-            <% end %>
-            <hr />
-
-            <% if current_user.present? %>
-            
-            <% post = Post.new %>
-            <%= form_with(model: post, local: true) do |f| %>
-              <fieldset style="text-align: center;">
-                <div class="form-group">
-                  <%= f.text_area :description,:placeholder=>"Description",:class=>"form-control",:minlength=>10,maxlength: 250 %>
-                </div>
-                
-                <%= f.hidden_field :user_id,:value=>current_user.id %>
-                <%#= f.hidden_field :another_user_id,:value=>@player.id %>
-                <%= f.submit "Post",:class=>"btn btn-primary btn-sign-in" %>
-              </fieldset>
-            <% end %>
-          <% end %>
-  
-          <hr>
-          <br />
-
-          <% Post.where('spam !=? and player_id IS ?',true,nil).order('created_at desc').all.each do |post| %>
-            <div class="media">
+          <% @tags.each do |tag| %>
+            <% post = Post.where(:id=>tag.post_id).first %>
+            <div class="media <%='unread' if tag.read == false %>">
                <a class="pull-left" href="#">
                 <% if post.image.present? %>
                   <%= image_tag post.image.url(:profile),class: "media-object" %>
@@ -46,13 +23,7 @@
                 <% end %>
                </a>
                <div class="media-body">
-                  <% if post.another_user_id.present? %>
-                    <% another_user = User.find_by_id(post.another_user_id) %>
-                    <h4 class="media-heading"><%#= link_to post.title,post_path(post) %> <span class="pull-right"> By <%= link_to post.user.name ,user_path(another_user.id) %> <i class="fa fa-caret-right"></i> <%= link_to post.user.name,user_path(post.user) %> </span></h4>
-                  <% else %>
-                    <h4 class="media-heading"><%#= link_to post.title,post_path(post) %><span class="pull-right"> By <%= link_to post.user.name ,user_path(post.user) %> (<%= post.user.user_id %>)</span></h4> 
-                  <% end %>
-                  <%# byebug %>
+                  <h4 class="media-heading"><%#= post.title %><span class="pull-right">By <%= link_to post.user.name,post_path(post) %> (<%= post.user.user_id %>)</span></h4>
                   <p>
                     <% post.description.split(" ").each do |word| %>
                       <% if word.include? "@" %>
@@ -70,7 +41,6 @@
                         <%= word %>
                       <% end %>
                     <% end %>
-                    
                   </p>
                   <ul class="list-inline list-unstyled">
                      <li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at.to_date.strftime('%a %b %d') %> </span></li>
@@ -82,13 +52,16 @@
             <div class="comments_section" id="<%= "comments_#{post.id}" %>">
               <%= render :partial => "/posts/comments", locals: {post: post} %>
             </div>
-            <hr />
+            <hr /> 
           <% end %>
-         </div>
+
+       </div>
       </div>
+      <% update_notifications() %>
       <!--/span-->
       <%= render "/layouts/right_panel" %>
       <!--/span-->
    </div>
    <!--/row-->
 </div>
+
