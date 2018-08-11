@@ -105,8 +105,9 @@
 
           <% post_ids = posts.pluck(:id) %>
           <% TagUser.where('tag_id =? and tag_type =?',"#{@user.id}","User").order('created_at desc').all.each do |tag| %>
-            <% post = Post.find_by_id(tag.tag_id) %>
-            <% if !post_ids.include? tag.tag_id %>
+            <%# byebug %>
+            <% post = Post.find_by_id(tag.post_id) %>
+            <% if !post_ids.include? tag.post_id %>
               <div class="media">
                  <a class="pull-left" href="#">
                   <% if post.image.present? %>
