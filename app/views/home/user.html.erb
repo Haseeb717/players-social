@@ -15,7 +15,12 @@
              </a>
              <div class="media-body pt15">
                 <h3 class="media-heading"><%= @user.name %> (<%= @user.user_id %>)</h3>
-                <p><%= link_to "Follow",add_follow_path(@user.id),:class=>"btn btn-success" %></a></p>
+                <% if current_user.following?(@user) %>
+                  <p><%= link_to "UnFollow",remove_follow_path(@user.id),:class=>"btn btn-success" %></a></p>
+                <% else %>
+                  <p><%= link_to "Follow",add_follow_path(@user.id),:class=>"btn btn-success" %></a></p>
+                <% end %>
+                
              </div>
           </div>
           <br />
