@@ -38,7 +38,7 @@
           <% if current_user.present? %>
             <% user_ids = current_user.follows_by_type('User').map{|e| e.followable_id} %>
             
-            <% Post.where('spam !=? and user_id =?',true,user_ids).order('created_at desc').all.each do |post| %>
+            <% Post.where('user_id =?',user_ids).order('created_at desc').all.each do |post| %>
               <div class="media">
                  <a class="pull-left" href="#">
                   <% if post.image.present? %>
