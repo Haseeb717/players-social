@@ -55,7 +55,11 @@
           </div>
 
           <% posts = Post.where('another_user_id =? and spam !=?',@user.id,true) %>
-    
+          <% Post.where(:user_id=>@user.id).all.each do |tag| %>
+            <% post = Post.where(:id=>tag.id) %>
+            <% posts = posts + post %>
+          <% end %>
+
           <% post_ids = posts.pluck(:id) %>
           <% TagUser.where('tag_id =? and tag_type =?',"#{@user.id}","User").all.each do |tag| %>
             <% post = Post.where(:id=>tag.post_id) %>
@@ -76,7 +80,12 @@
                 <% end %>
                </a>
                <div class="media-body">
-                  <h4 class="media-heading"><%#= post.title %><span class="pull-right">By <%= link_to post.user.name,post_path(post) %> (<%= post.user.user_id %>)</span></h4>
+                  <% if post.another_user_id.present? %>
+                    <% another_user = User.find_by_id(post.another_user_id) %>
+                    <h4 class="media-heading"><%#= link_to post.title,post_path(post) %> <span class="pull-right"> By <%= link_to post.user.name ,user_path(post.user.id) %> <i class="fa fa-caret-right"></i> <%= link_to another_user.name,user_path(another_user) %> </span></h4>
+                  <% else %>
+                    <h4 class="media-heading"><%#= link_to post.title,post_path(post) %><span class="pull-right"> By <%= link_to post.user.name ,user_path(post.user) %> (<%= post.user.user_id %>)</span></h4> 
+                  <% end %>
                   <p>
                     <% post.description.split(" ").each do |word| %>
                       <% if word.include? "@" %>

@@ -175,13 +175,13 @@
                  <ul class="nav navbar-nav navbar-right links">
                     <% if user_signed_in? %>
                       <% unread = TagUser.where('tag_id =? and tag_type =? and read=?',"#{current_user.id}","User",false).count %>
-                      <%= link_to "Notifications (#{unread})", notifications_path,:class=>"btn btn-sm btn-success"%>
-                      <%= link_to "Edit Profile", edit_user_registration_path,:class=>"btn btn-sm btn-info"%>
-                      <%= link_to "Logout", destroy_user_session_path, method: :delete,:class=>"btn btn-sm btn-danger"%>
+                      <%= link_to "Notifications (#{unread})", notifications_path,:class=>"btn btn-sm btn-primary"%>
+                      <%= link_to "Edit Profile", edit_user_registration_path,:class=>"btn btn-sm btn-primary"%>
+                      <%= link_to "Logout", destroy_user_session_path, method: :delete,:class=>"btn btn-sm btn-primary"%>
                       <%#= link_to "My Posts",my_posts_path,:class=>"btn btn-sm btn-success" %>
                     <% else %>
-                      <%= link_to "Log in", new_user_session_path,:class=>"btn btn-sm btn-info" %>
-                      <%= link_to "Sign up", new_user_registration_path,:class=>"btn btn-sm btn-info" %>
+                      <%= link_to "Log in", new_user_session_path,:class=>"btn btn-sm btn-primary" %>
+                      <%= link_to "Sign up", new_user_registration_path,:class=>"btn btn-sm btn-primary" %>
                     <% end %>
                  </ul>
 
@@ -190,7 +190,7 @@
                       <%= text_field_tag :query,@query,:placeholder=>"Search Nampit",:class=>"form-control" %>
                     </div>
                     
-                    <%= submit_tag("Search",:class=>"btn btn-success") %>
+                    <%= submit_tag("Search",:class=>"btn btn-primary") %>
                   <% end %>
               </div>
               <!--/.navbar-collapse -->
@@ -202,10 +202,10 @@
                <div class="br-title">Trending Now:</div>
                <p class="marquee">
                   <ul>
-                    <% Player.joins(:posts).select("players.*, count(posts.id) as scount").group("players.id").order("scount DESC").last(10).each do |player| %>
+                    <% Player.joins(:posts).select("players.*, count(posts.id) as scount").group("players.id").order("scount DESC").last(9).each do |player| %>
                       <%# user_name = User.find_by_id(post.user_id).name %>
                       <% player_name = Player.find_by_id(player.id).name %>
-                      <li style="margin-left: 15px;margin-right: 15px"><%= link_to "#{player_name.capitalize}",player_path(player)  %></li>
+                      <li style="margin-left: 15px;margin-right: 15px"><%= link_to "#{player_name.titleize}",player_path(player)  %></li>
                     <% end %>
                   </ul>
                </p>

@@ -31,7 +31,7 @@ class HomeController < ApplicationController
   def add_follow
   	player = User.find(params["id"])
   	current_user.follow(player)
-    byebug
+    
     respond_to do |format|
       format.html { redirect_to users_path, notice: 'User added to followings list' }
     end

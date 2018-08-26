@@ -44,14 +44,15 @@ img.media-object {
 }
 .mg20{margin-top: 20px;}
 .mynav{
-  background: #238AE6;
+  background: #fff;
   border:0;
   border-radius: 0;
 }
+.mynav a.btn-sm{color: #fff !important;}
 .links{margin-top: 10px;}
 .font_18{font-size: 18px;}
 .mynav a{
-     color: #fff !important;
+     color: #337ab7 !important;
 }
 
  .custum-jumbotron{
