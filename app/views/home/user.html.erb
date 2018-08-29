@@ -81,11 +81,22 @@
                </a>
                <div class="media-body">
                   <% if post.another_user_id.present? %>
-                    <% another_user = User.find_by_id(post.another_user_id) %>
-                    <h4 class="media-heading"><%#= link_to post.title,post_path(post) %> <span class="pull-right"> By <%= link_to post.user.name ,user_path(post.user.id) %> <i class="fa fa-caret-right"></i> <%= link_to another_user.name,user_path(another_user) %> </span></h4>
-                  <% else %>
-                    <h4 class="media-heading"><%#= link_to post.title,post_path(post) %><span class="pull-right"> By <%= link_to post.user.name ,user_path(post.user) %> (<%= post.user.user_id %>)</span></h4> 
-                  <% end %>
+                      <% another_user = User.find_by_id(post.another_user_id) %>
+                      <h4 class="media-heading"><%#= link_to post.title,post_path(post) %> 
+                        <span><%= post.user.name %></span><%= link_to user_path(post.user.id) do %>
+                          <span><%= " (@"+"#{ (post.user.user_id)}"+")"%></span>  
+                        <% end %> <i class="fa fa-caret-right"></i> <%= link_to another_user.name,user_path(another_user) %> </span></h4>
+                    <% elsif post.player_id.present? %>
+                      <% another_user = Player.find_by_id(post.player_id) %>
+                      <h4 class="media-heading"><span><%= post.user.name %></span> <%= link_to user_path(post.user.id) do %>
+                          <%= " (@"+"#{ (post.user.user_id)}"+")"%></span>  
+                        <% end %> 
+                        <i class="fa fa-caret-right"></i> <%= link_to another_user.name,player_path(another_user) %> </span></h4>
+                    <% else %>
+                      <h4 class="media-heading"><span><%= post.user.name %></span><%= link_to user_path(post.user.id) do %>
+                          <span><%= " (@"+"#{ (post.user.user_id)}"+")"%></span>  
+                        <% end %> </h4> 
+                    <% end %>
                   <p>
                     <% post.description.split(" ").each do |word| %>
                       <% if word.include? "@" %>
