@@ -37,6 +37,18 @@ Rails.application.configure do
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
   config.serve_static_assets = true
+
+  config.paperclip_defaults = {
+    :storage => :s3,
+    s3_host_name: "s3.amazonaws.com",
+    :s3_protocol => :https,
+    s3_region: ENV['AWS_REGION'],
+    :s3_credentials => {
+      :access_key_id => ENV['AWS_ID'],
+      :secret_access_key => ENV['AWS_SECRET'],
+      :bucket => 'nampit-development'
+    }
+  }
   
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 

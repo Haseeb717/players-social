@@ -35,9 +35,9 @@
                 <div class="form-group">
                   <%= f.text_area :description,:placeholder=>"Description",:class=>"form-control",:minlength=>10,maxlength: 250 %>
                 </div>
-                <!-- div class="form-group">
+                <div class="form-group">
                   <%= f.file_field :image %>
-                </div> -->
+                </div>
                 <%= f.hidden_field :user_id,:value=>current_user.id %>
                 <%= f.hidden_field :another_user_id,:value=>@user.id %>
                 <%= f.submit "Post",:class=>"btn btn-primary btn-sign-in" %>

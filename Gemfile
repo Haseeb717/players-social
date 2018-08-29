@@ -36,7 +36,7 @@ gem 'devise'
 gem 'activeadmin', github: 'activeadmin'
 
 gem 'paperclip'
-
+gem 'aws-sdk', '~> 2.3'
 gem "acts_as_follower", github: "tcocca/acts_as_follower"
 
 # Use Capistrano for deployment
