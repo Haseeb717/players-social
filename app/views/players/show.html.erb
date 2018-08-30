@@ -2,13 +2,13 @@
    <div class="row">
       <%= render "/layouts/roaster" %>
       <!--/span-->
-      <div class="col-sm-6 col-md-6">
+      <div class="col-sm-8 col-md-8">
         <%= render "/layouts/alerts" %>
        <div class="jumbotron custum-jumbotron">
           <div class="media">
             <a class="pull-left" href="#">
             <% if @player.image.present? %>
-              <%= image_tag @player.image.url(:profile),class: "media-object" %>
+              <%= image_tag @player.image.url(:small),class: "media-object" %>
             <% else %>
               <%= image_tag "index.jpeg",class: "media-object" %>
             <% end %>
@@ -65,7 +65,7 @@
             <div class="media">
                <a class="pull-left" href="#">
                 <% if post.image.present? %>
-                  <%= image_tag post.image.url(:profile),class: "media-object" %>
+                  <%= image_tag post.image.url(:small),class: "media-object" %>
                 <% else %>
                   <%= image_tag "post.png",class: "media-object" %>
                 <% end %>

@@ -17,7 +17,7 @@
       <div class="comment-wrap">
         <div class="photo">
           <% if post.user.image.present? %>
-            <div class="avatar" style="background-image: url('<%= post.user.image.url(:profile) %>')"></div>
+            <div class="avatar" style="background-image: url('<%= post.user.image.url(:small) %>')"></div>
           <% else %>
             <div class="avatar" style="background-image: url('index.jpg')"></div>
           <% end %>

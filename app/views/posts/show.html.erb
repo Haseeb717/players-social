@@ -1,6 +1,6 @@
 <div class="container-fluid">
    <div class="row">
-      <div class="col-sm-3 col-md-3">
+      <div class="col-sm-2 col-md-2">
         <% if current_user.present? %>
          <div class="panel panel-primary">
             <div class="panel-heading">
@@ -19,13 +19,13 @@
          <!-- panel -->
       </div>
       <!--/span-->
-      <div class="col-sm-6 col-md-6">
+      <div class="col-sm-8 col-md-8">
         <div class="jumbotron custum-jumbotron">
             <br />
             <div class="media">
                <a class="media-left" href="#">
                   <% if @post.user.image.present? %>
-                    <%= image_tag @post.user.image.url(:profile),class: "media-object" %>
+                    <%= image_tag @post.user.image.url(:small),class: "media-object" %>
                   <% else %>
                     <%= image_tag "index.jpg",class: "media-object" %>
                   <% end %>
@@ -71,7 +71,7 @@
                 <div class="comment-wrap">
                   <div class="photo">
                     <% if @post.user.image.present? %>
-                      <div class="avatar" style="background-image: url('<%= @post.user.image.url(:profile) %>')"></div>
+                      <div class="avatar" style="background-image: url('<%= @post.user.image.url(:small) %>')"></div>
                     <% else %>
                       <div class="avatar" style="background-image: url('index.jpg')"></div>
                     <% end %>

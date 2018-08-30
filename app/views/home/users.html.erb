@@ -2,7 +2,7 @@
    <div class="row">
       <%= render "/layouts/roaster" %>
       <!--/span-->
-      <div class="col-sm-6 col-md-6">
+      <div class="col-sm-8 col-md-8">
         <%= render "/layouts/alerts" %>
          <div class="jumbotron custum-jumbotron">
             <h1 class="center">Users</h1>
@@ -11,7 +11,7 @@
               <div class="media">
                  <a class="pull-left" href="#">
                   <% if player.image.present? %>
-                    <%= image_tag player.image.url(:profile),class: "media-object" %>
+                    <%= image_tag player.image.url(:small),class: "media-object" %>
                   <% else %>
                     <%= image_tag "index.jpg",class: "media-object" %>
                   <% end %>

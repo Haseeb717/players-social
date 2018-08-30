@@ -25,8 +25,8 @@
      font-family: 'ProximaNovaSemibold';
 }
 img.media-object {
-    height: 140px;
-    width: 140px;
+    height: 64px;
+    width: 64px;
 }
 .unread{background-color: #e4e9f2 }
 .media-object-small{height: 64px;width: 64px;}
@@ -57,7 +57,6 @@ img.media-object {
 
  .custum-jumbotron{
      padding: 10px 10px;
-     background: #ddd;
      padding-right: 30px !important;
      padding-left: 30px !important;
      border-radius:2 !important ;
