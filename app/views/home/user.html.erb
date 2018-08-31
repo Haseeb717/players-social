@@ -8,12 +8,12 @@
           <div class="media">
              <a class="media-left" href="#">
                 <% if @user.image.present? %>
-                  <%= image_tag @user.image.url(:small),class: "media-object" %>
+                  <%= image_tag @user.image.url(:profile),class: "media-object-profile" %>
                 <% else %>
-                  <%= image_tag "index.jpeg",class: "media-object" %>
+                  <%= image_tag "index.jpeg",class: "media-object-profile" %>
                 <% end %>
              </a>
-             <div class="media-body pt15">
+             <div class="media-body">
                 <h3 class="media-heading"><%= @user.name %> (<%= @user.user_id %>)</h3>
                 <% if current_user.following?(@user) %>
                   <p><%= link_to "UnFollow",remove_follow_path(@user.id),:class=>"btn btn-success" %></a></p>

@@ -8,9 +8,9 @@
           <div class="media">
             <a class="pull-left" href="#">
             <% if @player.image.present? %>
-              <%= image_tag @player.image.url(:small),class: "media-object" %>
+              <%= image_tag @player.image.url(:profile),class: "media-object-profile" %>
             <% else %>
-              <%= image_tag "index.jpeg",class: "media-object" %>
+              <%= image_tag "index.jpeg",class: "media-object-profile" %>
             <% end %>
            </a>
            <div class="media-body">
