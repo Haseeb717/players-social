@@ -73,10 +73,10 @@
           
             <div class="media">
                <a class="pull-left" href="#">
-                <% if post.image.present? %>
-                  <%= image_tag post.image.url(:small),class: "media-object" %>
+                <% if post.user.image.present? %>
+                  <%= image_tag post.user.image.url(:small),class: "media-object" %>
                 <% else %>
-                  <%= image_tag "post.png",class: "media-object" %>
+                  <%= image_tag "index.jpeg",class: "media-object" %>
                 <% end %>
                </a>
                <div class="media-body">
