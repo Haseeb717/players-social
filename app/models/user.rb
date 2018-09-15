@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :posts,:dependent => :destroy
   has_many :comments,:dependent => :destroy
   after_create :update_username
+  before_create :add_to_list
 
 
   validate :uniqee_user_id, on: :create
@@ -29,5 +30,12 @@ class User < ApplicationRecord
 
   def update_username
     self.update_attributes(:user_id=>self.user_id.downcase)
+  end
+
+  def add_to_list
+    list_id = "74a060ffaf" 
+    gb = Gibbon::Request.new 
+    subscribe = gb.lists(list_id).members.create(body: { email_address: self.email, status: "subscribed", double_optin: false })
+    byebug
   end
 end

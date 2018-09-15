@@ -39,6 +39,8 @@ gem 'paperclip'
 gem 'aws-sdk', '~> 2.3'
 gem "acts_as_follower", github: "tcocca/acts_as_follower"
 
+gem 'gibbon', :git => 'https://github.com/amro/gibbon.git'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

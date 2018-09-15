@@ -24,9 +24,13 @@
             <i>(we need your current password to confirm your changes)</i>
             <%= f.password_field :current_password, autocomplete: "off",:placeholder=>"Current Password",:class=>"form-control" %>
           </div>
+          <h3>Edit Profile Picture</h3>
           <div class="form-group">
             <%= f.file_field :image %>
           </div>
+          <% if @user.image.present? %>
+            <p style="text-align:left;"><%= image_tag @user.image.url(:profile)%></p>
+          <% end %>
           <%= f.submit "Update",:class=>"btn btn-primary btn-sign-in" %>
         </fieldset>
       <% end %>
