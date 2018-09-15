@@ -36,6 +36,5 @@ class User < ApplicationRecord
     list_id = "74a060ffaf" 
     gb = Gibbon::Request.new 
     subscribe = gb.lists(list_id).members.create(body: { email_address: self.email, status: "subscribed", double_optin: false })
-    byebug
   end
 end
