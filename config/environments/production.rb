@@ -67,7 +67,7 @@ Rails.application.configure do
     :address   => "smtp.mandrillapp.com",
     :port      => 25,
     :enable_starttls_auto => true,
-    :user_name => 'nampit',
+    :user_name => 'nicholasj.shemik@gmail.com',
     :password  => "074125d12e20b39ac706aaec124b08bf",
     :authentication => 'plain',
     :domain => 'nampit.com'
