@@ -33,8 +33,12 @@ class User < ApplicationRecord
   end
 
   def add_to_list
-    list_id = "74a060ffaf" 
-    gb = Gibbon::Request.new 
-    subscribe = gb.lists(list_id).members.create(body: { email_address: self.email, status: "subscribed", double_optin: false })
+    list_id = "74a060ffaf"
+    begin
+      gb = Gibbon::Request.new 
+      subscribe = gb.lists(list_id).members.create(body: { email_address: self.email, status: "subscribed", double_optin: false })   
+    rescue Exception => e
+       
+    end
   end
 end
