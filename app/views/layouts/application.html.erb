@@ -72,92 +72,105 @@
       </style>
       <div class="container-index row"> 
         <div class="col-sm-6">
-        <h1>Welcome to NAMPIT.</h1>
-        <p class="text">
-          NAMPIT - Notes About My Players' Info Today <br>
-          <br>
-          The Social Network for Fantasy Sports. <br>
-          Connect with friends & follow your favorite players. 
-          Share roster ideas. See who's trending. 
-          Collaborate on who to start, bench, and trade. 
-        </p>
+          <h1>Welcome to NAMPIT.</h1>
+          <p class="text">
+            NAMPIT - Notes About My Players' Info Today <br>
+            <br>
+            The Social Network for Fantasy Sports. <br>
+            Connect with friends & follow your favorite players. 
+            Share roster ideas. See who's trending. 
+            Collaborate on who to start, bench, and trade. 
+          </p>
+        </div>
+        <div class="col-sm-6">
+            <div class="log-in panel">
+              <h2>Login</h2>
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                <div class="field">
+                  <%= f.label :email %><br />
+                  <div class="input">
+                    <%= f.email_field :email, autofocus: true %>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <%= f.label :password %><br />
+                  <div class="input">
+                    <%= f.password_field :password, autocomplete: "off" %>
+                  </div>
+                </div>
+
+                <div class="actions">
+                  <%= f.submit "Log in", class: "btn btn-primary" %>
+                </div>
+              <% end %>
+            </div>
+            
+            <div class="sign-up panel">
+              <h2>Sign up for free</h2>
+              <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => { :id => "sign-up" }) do |f| %>
+                <%= devise_error_messages! %>
+
+                <div class="field">
+                  <%= f.label :name %><br />
+                  <div class="input">
+                    <%= f.text_field :name, autofocus: true,:required=>true %>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <%= f.label :user_id %><br />
+                  <div class="input">
+                    <%= f.text_field :user_id,:required=>true%>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <%= f.label :email %><br />
+                  <div class="input">
+                    <%= f.email_field :email,:id=>"sign-up-email",:required=>true %>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <%= f.label :password %>
+                  <% if @minimum_password_length %>
+                  <em>(<%= @minimum_password_length %> characters minimum)</em>
+                  <% end %><br />
+                  <div class="input">
+                    <%= f.password_field :password, autocomplete: "off",:id=>"sign-up-password",:required=>true %>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <%= f.label :password_confirmation %><br />
+                  <div class="input">
+                    <%= f.password_field :password_confirmation, autocomplete: "off",:required=>true %>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="input">
+                    <%= f.check_box :terms_and_conditions %> <%= link_to 'Agree with Terms and Conditions',asset_path("privacy-preview-web.jpg"), download: "Terms and Conditions",class: "white",required: true %>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="input">
+                    <%= f.check_box :privacy_policy %> <%= link_to 'Agree with Privacy and Policy',asset_path("terms-preview-web.jpg"), download: "Privacy Policy",class: "white",required: true %>
+                  </div>
+                </div>
+
+                <div class="actions" style="margin: 20px 0;">
+                  <%= f.submit "Sign Up", class: "btn btn-primary" %>
+                </div>
+              <% end %>
+            </div>
+        </div>
       </div>
-      <div class="col-sm-6">
-          <div class="log-in panel">
-            <h2>Login</h2>
-            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-              <div class="field">
-                <%= f.label :email %><br />
-                <div class="input">
-                  <%= f.email_field :email, autofocus: true %>
-                </div>
-              </div>
-
-              <div class="field">
-                <%= f.label :password %><br />
-                <div class="input">
-                  <%= f.password_field :password, autocomplete: "off" %>
-                </div>
-              </div>
-
-              <div class="actions">
-                <%= f.submit "Log in", class: "btn btn-primary" %>
-              </div>
-            <% end %>
-          </div>
-          
-          <div class="sign-up panel">
-            <h2>Sign up for free</h2>
-            <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-              <%= devise_error_messages! %>
-
-              <div class="field">
-                <%= f.label :name %><br />
-                <div class="input">
-                  <%= f.text_field :name, autofocus: true %>
-                </div>
-              </div>
-
-              <div class="field">
-                <%= f.label :user_id %><br />
-                <div class="input">
-                  <%= f.text_field :user_id%>
-                </div>
-              </div>
-
-              <div class="field">
-                <%= f.label :email %><br />
-                <div class="input">
-                  <%= f.email_field :email %>
-                </div>
-              </div>
-
-              <div class="field">
-                <%= f.label :password %>
-                <% if @minimum_password_length %>
-                <em>(<%= @minimum_password_length %> characters minimum)</em>
-                <% end %><br />
-                <div class="input">
-                  <%= f.password_field :password, autocomplete: "off" %>
-                </div>
-              </div>
-
-              <div class="field">
-                <%= f.label :password_confirmation %><br />
-                <div class="input">
-                  <%= f.password_field :password_confirmation, autocomplete: "off" %>
-                </div>
-              </div>
-              <div class="actions">
-                <%= f.submit "Sign Up", class: "btn btn-primary" %>
-              </div>
-            <% end %>
-          </div>
-      </div>
-      <div class="col-sm-12">
-        <p class="footer-links"> About  Help  Terms  Privacy  Advertise  Partner  © 2018 Nampit </p>
-      </div>
-      </div>
+      
+        <p class="footer-links" style="margin-top:150px"> About  Help  Terms  Privacy  Advertise  Partner  © 2018 Nampit </p>
+      
     <% else %>
       <div class="navbar navbar-fixed-top navbar-default mynav">
            <div class="container">

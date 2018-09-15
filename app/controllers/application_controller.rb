@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   # my custom fields are :name, :heard_how
   def configure_permitted_parameters
-  	devise_parameter_sanitizer.permit(:sign_up, keys: [:name,:email, :password, :image,:password_confirmation,:user_id])
+  	devise_parameter_sanitizer.permit(:sign_up, keys: [:name,:email, :password, :image,:password_confirmation,:user_id,:terms_and_conditions,:privacy_policy])
   	devise_parameter_sanitizer.permit(:account_update, keys: [:name,:email, :password, :password_confirmation, :current_password,:image,:user_id])
 	end
 end

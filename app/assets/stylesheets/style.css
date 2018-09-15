@@ -28,6 +28,7 @@ img.media-object {
     height: 64px;
     width: 64px;
 }
+.white{color: white;}
 .unread{background-color: #e4e9f2 }
 .media-object-small{height: 64px;width: 64px;}
 .media-object-profile{height: 140px;width: 140px;}

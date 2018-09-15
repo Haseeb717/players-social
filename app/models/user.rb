@@ -10,7 +10,7 @@ class User < ApplicationRecord
   before_create :add_to_list
 
 
-  validate :uniqee_user_id, on: :create
+  validate :uniqee_user_id,:terms_and_conditions,:privacy_policy, on: :create
 
   has_attached_file :image, styles: { small: "64x64", med: "100x100", profile: "140x140" }
 	validates_attachment_content_type :image, 
