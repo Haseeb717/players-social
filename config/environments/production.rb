@@ -50,28 +50,28 @@ Rails.application.configure do
     }
   }
 
-  #config.action_mailer.default_url_options = { :host => 'nampit.com' }
-  #config.action_mailer.delivery_method = :smtp
-  # SMTP settings for gmail
-  # config.action_mailer.smtp_settings = {
-  #  :address              => "smtp.sendgrid.net",
-  #  :port                 => 587,
-  #  :domain              => 'heroku.com',
-  #  :user_name            => ENV['SENDGRID_USERNAME'],
-  #  :password             => ENV['SENDGRID_PASSWORD'],
-  #  :authentication       => "plain",
-  #  :enable_starttls_auto => true
-  # }
+  config.action_mailer.default_url_options = { :host => 'nampit.com' }
+  config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.smtp_settings = {
-    :address   => "smtp.mandrillapp.com",
-    :port      => 25,
-    :enable_starttls_auto => true,
-    :user_name => 'nicholasj.shemik@gmail.com',
-    :password  => "074125d12e20b39ac706aaec124b08bf",
-    :authentication => 'login',
-    :domain => 'nampit.com'
+   :address              => "smtp.sendgrid.net",
+   :port                 => 587,
+   :domain              => 'heroku.com',
+   :user_name            => ENV['SENDGRID_USERNAME'],
+   :password             => ENV['SENDGRID_PASSWORD'],
+   :authentication       => "plain",
+   :enable_starttls_auto => true
   }
+
+  # config.action_mailer.smtp_settings = {
+  #   :address   => "smtp.mandrillapp.com",
+  #   :port      => 25,
+  #   :enable_starttls_auto => true,
+  #   :user_name => 'nicholasj.shemik@gmail.com',
+  #   :password  => "074125d12e20b39ac706aaec124b08bf",
+  #   :authentication => 'login',
+  #   :domain => 'nampit.com'
+  # }
 
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
