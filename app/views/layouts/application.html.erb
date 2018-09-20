@@ -86,6 +86,8 @@
             <div class="log-in panel">
               <h2>Login</h2>
               <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                <%= render "/layouts/alerts" %>
+
                 <div class="field">
                   <%= f.label :email %><br />
                   <div class="input">
