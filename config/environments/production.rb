@@ -50,7 +50,7 @@ Rails.application.configure do
     }
   }
 
-  config.action_mailer.default_url_options = { :host => 'nampit.com' }
+  config.action_mailer.default_url_options = { :host => 'www.nampit.com' }
   config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.smtp_settings = {
