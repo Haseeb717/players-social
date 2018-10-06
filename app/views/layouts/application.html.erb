@@ -9,7 +9,11 @@
   </head>
 
   <body>
-    <% if !user_signed_in? %>
+    <% if params["action"] == "terms" || params["action"] == "policy" %>
+      <div class="container">
+        <%= yield %>
+      </div>
+    <% elsif !user_signed_in? %>
       <style>
           body { 
               background:  linear-gradient(
@@ -153,13 +157,13 @@
 
                 <div class="field">
                   <div class="input">
-                    <%= f.check_box :terms_and_conditions,required: true %> <%= link_to 'Agree with Terms and Conditions',asset_path("privacy-preview-web.jpg"), download: "Terms and Conditions",class: "white" %>
+                    <%= f.check_box :terms_and_conditions,required: true %> <%= link_to 'Agree with Terms and Conditions',terms_path,class: "white",target: "_blank" %>
                   </div>
                 </div>
 
                 <div class="field">
                   <div class="input">
-                    <%= f.check_box :privacy_policy,required: true %> <%= link_to 'Agree with Privacy and Policy',asset_path("terms-preview-web.jpg"), download: "Privacy Policy",class: "white",required: true %>
+                    <%= f.check_box :privacy_policy,required: true %> <%= link_to 'Agree with Privacy and Policy',privacy_policy_path,class: "white",target: "_blank" %>
                   </div>
                 </div>
 
@@ -172,7 +176,6 @@
       </div>
       
         <p class="footer-links" style="margin-top:150px"> About  Help  Terms  Privacy  Advertise  Partner  © 2018 Nampit </p>
-      
     <% else %>
       <div class="navbar navbar-fixed-top navbar-default mynav">
            <div class="container">

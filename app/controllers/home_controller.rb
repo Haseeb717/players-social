@@ -55,6 +55,12 @@ class HomeController < ApplicationController
     end
   end
 
+  def policy
+  end
+
+  def terms
+  end
+
   def search
     @query = params["query"]
     @users = User.where('lower(name) LIKE (?)',"%#{@query.downcase}%")
