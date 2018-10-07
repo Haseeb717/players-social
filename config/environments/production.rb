@@ -38,17 +38,17 @@ Rails.application.configure do
   config.assets.digest = true
   config.serve_static_assets = true
 
-  config.paperclip_defaults = {
-    :storage => :s3,
-    s3_host_name: "s3.amazonaws.com",
-    :s3_protocol => :https,
-    s3_region: ENV['AWS_REGION'],
-    :s3_credentials => {
-      :access_key_id => ENV['AWS_ID'],
-      :secret_access_key => ENV['AWS_SECRET'],
-      :bucket => 'nampit-development'
-    }
-  }
+  # config.paperclip_defaults = {
+  #   :storage => :s3,
+  #   s3_host_name: "s3.amazonaws.com",
+  #   :s3_protocol => :https,
+  #   s3_region: ENV['AWS_REGION'],
+  #   :s3_credentials => {
+  #     :access_key_id => ENV['AWS_ID'],
+  #     :secret_access_key => ENV['AWS_SECRET'],
+  #     :bucket => 'nampit-development'
+  #   }
+  # }
 
   config.action_mailer.default_url_options = { :host => 'www.nampit.com' }
   config.action_mailer.delivery_method = :smtp
