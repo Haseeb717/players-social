@@ -36,7 +36,7 @@ gem 'devise'
 gem 'activeadmin', github: 'activeadmin'
 
 gem 'paperclip'
-gem 'aws-sdk', '~> 2.3'
+gem 'paperclip-cloudinary'
 gem "acts_as_follower", github: "tcocca/acts_as_follower"
 
 gem 'gibbon', :git => 'https://github.com/amro/gibbon.git'

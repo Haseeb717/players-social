@@ -45,17 +45,7 @@ Rails.application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-  config.paperclip_defaults = {
-    :storage => :s3,
-    s3_host_name: "s3.amazonaws.com",
-    :s3_protocol => :https,
-    s3_region: 'us-east-1', # or ENV['AWS_REGION']
-    :s3_credentials => {
-      :access_key_id => 'AKIAIK4PS7U3EYN66GJQ',
-      :secret_access_key => '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',
-      :bucket => 'nampit-development'
-    }
-  }
+  
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true

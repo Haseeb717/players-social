@@ -4,7 +4,7 @@ class Post < ApplicationRecord
   has_many :tags,:dependent => :destroy
   has_many :comments,:dependent => :destroy
   has_many :tag_users,:dependent => :destroy
-  has_attached_file :image, styles: { small: "64x64", med: "100x100", profile: "140x140" },:path => ":env_folder/:attachment/:id/:style/:filename"
+  has_attached_file :image,:storage => :cloudinary, styles: { small: "64x64", med: "100x100", profile: "140x140" },:path => ":env_folder/:attachment/:id/:style/:filename"
 	validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 
 	private

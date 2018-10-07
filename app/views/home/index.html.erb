@@ -8,7 +8,7 @@
             <% if current_user.present? %>
               
                 <% if current_user.image.present? %>
-                  <%= image_tag current_user.image.url(:small),class: "media-object-small" %>
+                  <%= cl_image_tag current_user.image.url(:small),class: "media-object-small" %>
                 <% else %>
                   <%= image_tag "index.jpeg",class: "media-object-small" %>
                 <% end %>
@@ -44,7 +44,7 @@
               <div class="media">
                  <a class="pull-left" href="#">
                   <% if post.user.image.present? %>
-                    <%= image_tag post.user.image.url(:small),class: "media-object" %>
+                    <%= cl_image_tag post.user.image.url(:small),class: "media-object" %>
                   <% else %>
                     <%= image_tag "index.jpeg",class: "media-object" %>
                   <% end %>

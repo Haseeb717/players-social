@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   validate :uniqee_user_id,:terms_and_conditions,:privacy_policy, on: :create
 
-  has_attached_file :image, styles: { small: "64x64", med: "100x100", profile: "140x140" }
+  has_attached_file :image,:storage => :cloudinary, styles: { small: "64x64", med: "100x100", profile: "140x140" },:path => ":env_folder/:attachment/:id/:style/:filename"
 	validates_attachment_content_type :image, 
                                     :content_type => /^image\/(png|gif|jpeg|jpg)/,
                                     :message => 'only (png/gif/jpeg/jpg) images'
@@ -40,5 +40,11 @@ class User < ApplicationRecord
     rescue Exception => e
        
     end
+  end
+
+  private
+  # interpolate in paperclip
+  Paperclip.interpolates :env_folder  do |attachment, style|
+    Rails.env.production? ? 'production' : 'development'
   end
 end
