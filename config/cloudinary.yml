@@ -1,6 +1,19 @@
+---
+development:
+  cloud_name: nampit
+  api_key: '257885447974412'
+  api_secret: bsXeuIDdiEKYu4uvhAtxQ6Qpf1E
+  enhance_image_tag: true
+  static_image_support: false
 production:
   cloud_name: nampit
-  api_key: ENV['API_KEY']
-  api_secret: ENV['API_SECRET']
+  api_key: '257885447974412'
+  api_secret: bsXeuIDdiEKYu4uvhAtxQ6Qpf1E
   enhance_image_tag: true
   static_image_support: true
+test:
+  cloud_name: nampit
+  api_key: '257885447974412'
+  api_secret: bsXeuIDdiEKYu4uvhAtxQ6Qpf1E
+  enhance_image_tag: true
+  static_image_support: false
